@@ -12,18 +12,17 @@ import {TOffersFull} from '../../types/offerFull';
 import {TReviews} from '../../types/review';
 
 type TAppProps = {
-  offersCount: number;
   offers: TOffers;
   offersFull: TOffersFull;
   reviews: TReviews;
 };
 
-function App({ offersCount, offers, offersFull, reviews }: TAppProps): JSX.Element {
+function App({ offers, offersFull, reviews }: TAppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root} element={<Layout />}>
-          <Route index element={<Main offersCount={offersCount} />} />
+          <Route index element={<Main offers={offers} />} />
           <Route path={AppRoute.Login} element={<Login />} />
           <Route path={AppRoute.Offer} element={<Offer />} />
           <Route

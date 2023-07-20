@@ -1,10 +1,13 @@
 import OfferCard from '../../offer-card/OfferCard';
+import {TOffer, TOffers} from '../../../types/offer';
 
 type MainProps = {
-  offersCount: number;
+  offers: TOffers;
 };
 
-function Main({ offersCount }: MainProps): JSX.Element {
+function Main({ offers }: MainProps): JSX.Element {
+  const offersCount = offers.length;
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -78,11 +81,7 @@ function Main({ offersCount }: MainProps): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <OfferCard />
-              <OfferCard />
-              <OfferCard />
-              <OfferCard />
-              <OfferCard />
+              {offers.map((offer: TOffer) => <OfferCard key={offer.id} offer={offer} />)}
             </div>
           </section>
           <div className="cities__right-section">
