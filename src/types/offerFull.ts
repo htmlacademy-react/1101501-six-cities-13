@@ -12,5 +12,3 @@ export type TOfferFull = TOffer & {
   images: string[];
   maxAdults: number;
 }
-
-export type TOffersFull = TOfferFull[]

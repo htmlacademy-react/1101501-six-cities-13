@@ -7,14 +7,14 @@ import Favorites from '../pages/page-favorites/Favorites';
 import Layout from '../layout/Layout';
 import PrivateRoute from '../private-route/PrivateRoute';
 import { AppRoute, AuthorizationStatus } from '../../constants';
-import {TOffers} from '../../types/offer';
-import {TOffersFull} from '../../types/offerFull';
-import {TReviews} from '../../types/review';
+import {TOffer} from '../../types/offer';
+import {TOfferFull} from '../../types/offerFull';
+import {TReview} from '../../types/review';
 
 type TAppProps = {
-  offers: TOffers;
-  offersFull: TOffersFull;
-  reviews: TReviews;
+  offers: TOffer[];
+  offersFull: TOfferFull[];
+  reviews: TReview[];
 };
 
 function App({ offers, offersFull, reviews }: TAppProps): JSX.Element {

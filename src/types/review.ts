@@ -1,4 +1,4 @@
-export type TComments = {
+export type TReview = {
   id: string;
   date: string;
   user: {
@@ -9,5 +9,3 @@ export type TComments = {
   comment: string;
   rating: number;
 }
-
-export type TReviews = TComments[];
