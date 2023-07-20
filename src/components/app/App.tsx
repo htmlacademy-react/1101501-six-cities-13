@@ -7,12 +7,18 @@ import Favorites from '../pages/page-favorites/Favorites';
 import Layout from '../layout/Layout';
 import PrivateRoute from '../private-route/PrivateRoute';
 import { AppRoute, AuthorizationStatus } from '../../constants';
+import {TOffers} from '../../types/offer';
+import {TOffersFull} from '../../types/offerFull';
+import {TReviews} from '../../types/review';
 
-type AppProps = {
+type TAppProps = {
   offersCount: number;
+  offers: TOffers;
+  offersFull: TOffersFull;
+  reviews: TReviews;
 };
 
-function App({ offersCount }: AppProps): JSX.Element {
+function App({ offersCount, offers, offersFull, reviews }: TAppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
