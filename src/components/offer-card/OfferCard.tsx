@@ -3,17 +3,18 @@ import {useState} from 'react';
 
 type TOfferCardProps = {
   offer: TOffer;
+  targetOfferId: (id: string) => void;
 }
 
-function OfferCard({ offer }: TOfferCardProps): JSX.Element {
-  const {isPremium, isFavorite, previewImage, title, type, rating, price} = offer;
-  const [isFavoriteOffer, setIsFavoriteOffer] = useState(isFavorite);
+function OfferCard({ offer, targetOfferId }: TOfferCardProps): JSX.Element {
+  const {isPremium, isFavorite, previewImage, title, type, rating, price, id} = offer;
+  const [isFavoriteOffer, setIsFavoriteOffer] = useState<boolean>(isFavorite);
   const isFavoriteOfferClickHandler = () => {
     setIsFavoriteOffer(!isFavoriteOffer);
   };
 
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseOver={() => targetOfferId(id)}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
