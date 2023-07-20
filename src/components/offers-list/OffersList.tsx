@@ -2,12 +2,13 @@ import {TOffer} from '../../types/offer';
 import OfferCard from '../offer-card/OfferCard';
 import OfferSortForm from '../offer-sort-form/OfferSortForm';
 import {useState} from 'react';
+import {ClassNameForOfferCardType} from '../../constants';
 
-type OffersListType = {
+type TOffersListProps = {
   offers: TOffer[];
 }
 
-function OffersList({ offers }: OffersListType): JSX.Element {
+function OffersList({ offers }: TOffersListProps): JSX.Element {
   const offersCount = offers.length;
   const [targetOfferId, setTargetOfferId] = useState<string>('');
 
@@ -22,7 +23,7 @@ function OffersList({ offers }: OffersListType): JSX.Element {
       </b>
       <OfferSortForm />
       <div className="cities__places-list places__list tabs__content">
-        {offers.map((offer) => <OfferCard key={offer.id} offer={offer} targetOfferId={setTargetOfferId}/>)}
+        {offers.map((offer) => <OfferCard cardType={ClassNameForOfferCardType.Cities} key={offer.id} offer={offer} targetOfferId={setTargetOfferId}/>)}
       </div>
     </section>
   );

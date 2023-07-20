@@ -8,16 +8,12 @@ import Layout from '../layout/Layout';
 import PrivateRoute from '../private-route/PrivateRoute';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import {TOffer} from '../../types/offer';
-import {TOfferFull} from '../../types/offerFull';
-import {TReview} from '../../types/review';
 
 type TAppProps = {
   offers: TOffer[];
-  offersFull: TOfferFull[];
-  reviews: TReview[];
 };
 
-function App({ offers, offersFull, reviews }: TAppProps): JSX.Element {
+function App({ offers }: TAppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -28,8 +24,8 @@ function App({ offers, offersFull, reviews }: TAppProps): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authStatus={AuthorizationStatus.NoAuth}>
-                <Favorites />
+              <PrivateRoute authStatus={AuthorizationStatus.Auth}>
+                <Favorites offers={offers}/>
               </PrivateRoute>
             }
           />

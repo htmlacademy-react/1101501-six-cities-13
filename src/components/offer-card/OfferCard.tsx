@@ -3,10 +3,11 @@ import {useState} from 'react';
 
 type TOfferCardProps = {
   offer: TOffer;
-  targetOfferId: (id: string) => void;
+  cardType: string;
+  targetOfferId?: (id: string) => void;
 }
 
-function OfferCard({ offer, targetOfferId }: TOfferCardProps): JSX.Element {
+function OfferCard({ offer, cardType, targetOfferId }: TOfferCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, title, type, rating, price, id} = offer;
   const [isFavoriteOffer, setIsFavoriteOffer] = useState<boolean>(isFavorite);
   const isFavoriteOfferClickHandler = () => {
@@ -14,13 +15,13 @@ function OfferCard({ offer, targetOfferId }: TOfferCardProps): JSX.Element {
   };
 
   return (
-    <article className="cities__card place-card" onMouseOver={() => targetOfferId(id)}>
+    <article className={`${cardType}__card place-card`} onMouseOver={() => targetOfferId && targetOfferId(id)}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"

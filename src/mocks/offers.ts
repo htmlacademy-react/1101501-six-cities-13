@@ -29,7 +29,7 @@ const offers = [
     'price': 368,
     'previewImage': 'https://13.design.pages.academy/static/hotel/12.jpg',
     'city': {
-      'name': 'Paris',
+      'name': 'Moscow',
       'location': {
         'latitude': 48.85661,
         'longitude': 2.351499,
@@ -41,7 +41,7 @@ const offers = [
       'longitude': 2.330499,
       'zoom': 16
     },
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': true,
     'rating': 4.2
   },
@@ -52,7 +52,7 @@ const offers = [
     'price': 258,
     'previewImage': 'https://13.design.pages.academy/static/hotel/11.jpg',
     'city': {
-      'name': 'Paris',
+      'name': 'Berlin',
       'location': {
         'latitude': 48.85661,
         'longitude': 2.351499,
@@ -64,7 +64,7 @@ const offers = [
       'longitude': 2.335499,
       'zoom': 16
     },
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 4.2
   },
@@ -88,6 +88,29 @@ const offers = [
       'zoom': 16
     },
     'isFavorite': false,
+    'isPremium': false,
+    'rating': 1.5
+  },
+  {
+    'id': 'f6e517e8-d266-48f0-9f61-8d2f2b3e6be6',
+    'title': 'Amazing and Extremely Central Flat',
+    'type': 'hotel',
+    'price': 116,
+    'previewImage': 'https://13.design.pages.academy/static/hotel/10.jpg',
+    'city': {
+      'name': 'Paris',
+      'location': {
+        'latitude': 48.85661,
+        'longitude': 2.351499,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 48.85761,
+      'longitude': 2.358499,
+      'zoom': 16
+    },
+    'isFavorite': true,
     'isPremium': false,
     'rating': 1.5
   },

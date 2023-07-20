@@ -1,11 +1,11 @@
 import {TOffer} from '../../../types/offer';
 import OffersList from '../../offers-list/OffersList';
 
-type MainProps = {
+type TMainProps = {
   offers: TOffer[];
 };
 
-function Main({ offers }: MainProps): JSX.Element {
+function Main({ offers }: TMainProps): JSX.Element {
 
   return (
     <main className="page__main page__main--index">
