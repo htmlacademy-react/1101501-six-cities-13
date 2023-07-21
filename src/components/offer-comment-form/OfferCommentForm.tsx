@@ -40,7 +40,7 @@ function OfferCommentForm(): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <OfferRating onRatingChange={changeRatingHandler} />
+      <OfferRating initialValue={formData.rating} onRatingChange={changeRatingHandler} />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"

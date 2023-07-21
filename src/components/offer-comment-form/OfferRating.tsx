@@ -5,14 +5,16 @@ type TChangeEvent = ChangeEvent<HTMLInputElement>
 
 type TOfferRatingProps = {
   onRatingChange: (ratingValue: number) => void;
+  initialValue: number;
 }
 
-function OfferRating({ onRatingChange }: TOfferRatingProps): JSX.Element {
+function OfferRating({ initialValue, onRatingChange }: TOfferRatingProps): JSX.Element {
   const ratings = [...OFFER_COMMENT_RATINGS].sort((a,b) => b.ratingValue - a.ratingValue);
   const changeRatingHandler = (evt: TChangeEvent) => {
     const ratingValue = Number(evt.target.value);
     onRatingChange(ratingValue);
   };
+
   return (
     <div className="reviews__rating-form form__rating">
       {ratings.map((rating) => {
@@ -28,6 +30,7 @@ function OfferRating({ onRatingChange }: TOfferRatingProps): JSX.Element {
               id={generateIdValue}
               type="radio"
               onChange={changeRatingHandler}
+              checked={initialValue === ratingValue}
             />
             <label
               htmlFor={generateIdValue}
