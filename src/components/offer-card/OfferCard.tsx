@@ -1,5 +1,7 @@
 import {TOffer} from '../../types/offer';
 import {useState} from 'react';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../constants';
 
 type TOfferCardProps = {
   offer: TOffer;
@@ -22,7 +24,7 @@ function OfferCard({ offer, cardType, targetOfferId }: TOfferCardProps): JSX.Ele
         </div>
       )}
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -30,7 +32,7 @@ function OfferCard({ offer, cardType, targetOfferId }: TOfferCardProps): JSX.Ele
             height={200}
             alt={title}
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -55,7 +57,7 @@ function OfferCard({ offer, cardType, targetOfferId }: TOfferCardProps): JSX.Ele
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`${AppRoute.Offer}/${offer.id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

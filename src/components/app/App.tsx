@@ -20,7 +20,9 @@ function App({ offers }: TAppProps): JSX.Element {
         <Route path={AppRoute.Root} element={<Layout />}>
           <Route index element={<Main offers={offers} />} />
           <Route path={AppRoute.Login} element={<Login />} />
-          <Route path={AppRoute.Offer} element={<Offer />} />
+          <Route path={AppRoute.Offer}>
+            <Route path=':id' element={<Offer />} />
+          </Route>
           <Route
             path={AppRoute.Favorites}
             element={
