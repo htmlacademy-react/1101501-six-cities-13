@@ -2,9 +2,9 @@ import { PropsWithChildren } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 
-type PrivateRouteProps = PropsWithChildren<{ authStatus: string }>;
+type TPrivateRouteProps = PropsWithChildren<{ authStatus: string }>;
 
-function PrivateRoute({ children, authStatus }: PrivateRouteProps): React.ReactNode {
+function PrivateRoute({ children, authStatus }: TPrivateRouteProps): React.ReactNode {
   return authStatus === AuthorizationStatus.Auth ? (
     children
   ) : (

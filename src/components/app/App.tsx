@@ -7,24 +7,27 @@ import Favorites from '../pages/page-favorites/Favorites';
 import Layout from '../layout/Layout';
 import PrivateRoute from '../private-route/PrivateRoute';
 import { AppRoute, AuthorizationStatus } from '../../constants';
+import {TOffer} from '../../types/offer';
 
-type AppProps = {
-  offersCount: number;
+type TAppProps = {
+  offers: TOffer[];
 };
 
-function App({ offersCount }: AppProps): JSX.Element {
+function App({ offers }: TAppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root} element={<Layout />}>
-          <Route index element={<Main offersCount={offersCount} />} />
+          <Route index element={<Main offers={offers} />} />
           <Route path={AppRoute.Login} element={<Login />} />
-          <Route path={AppRoute.Offer} element={<Offer />} />
+          <Route path={AppRoute.Offer}>
+            <Route path=':id' element={<Offer />} />
+          </Route>
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authStatus={AuthorizationStatus.NoAuth}>
-                <Favorites />
+              <PrivateRoute authStatus={AuthorizationStatus.Auth}>
+                <Favorites offers={offers}/>
               </PrivateRoute>
             }
           />

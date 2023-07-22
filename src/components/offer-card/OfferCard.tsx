@@ -1,43 +1,65 @@
-function OfferCard(): JSX.Element {
+import {TOffer} from '../../types/offer';
+import {useState} from 'react';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../constants';
+
+type TOfferCardProps = {
+  offer: TOffer;
+  cardType: string;
+  targetOfferId?: (id: string) => void;
+}
+
+function OfferCard({ offer, cardType, targetOfferId }: TOfferCardProps): JSX.Element {
+  const {isPremium, isFavorite, previewImage, title, type, rating, price, id} = offer;
+  const [isFavoriteOffer, setIsFavoriteOffer] = useState<boolean>(isFavorite);
+  const isFavoriteOfferClickHandler = () => {
+    setIsFavoriteOffer(!isFavoriteOffer);
+  };
+
   return (
-    <article className="cities__card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+    <article className={`${cardType}__card place-card`} onMouseOver={() => targetOfferId && targetOfferId(id)}>
+      {isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
+      <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img
             className="place-card__image"
-            src="img/apartment-01.jpg"
+            src={previewImage}
             width={260}
             height={200}
-            alt="Place image"
+            alt={title}
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€120</b>
+            <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className={`place-card__bookmark-button ${
+            isFavoriteOffer ? 'place-card__bookmark-button--active' : ''
+          } button`} type="button" onClick={isFavoriteOfferClickHandler}
+          >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
-              <use xlinkHref="#icon-bookmark" />
+              <use xlinkHref="#icon-bookmark"/>
             </svg>
             <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span style={{width: `${(rating * 100) / 5}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <Link to={`${AppRoute.Offer}/${offer.id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
