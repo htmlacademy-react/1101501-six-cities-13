@@ -20,7 +20,6 @@ export enum OfferCommentLimit {
   CommentMinLength = 50,
   CommentMaxLength = 300,
   MinRating = 1,
-  MaxRating = 5
 }
 
 export const OFFER_COMMENT_RATINGS = [

@@ -1,21 +1,21 @@
 const offers = [
   {
-    'id': 'e4d1588c-9372-4d2c-a08b-caaf23f668e6',
+    'id': 'e253f2ea-cb5d-4c66-8408-e15afee02676',
     'title': 'The house among olive ',
     'type': 'hotel',
     'price': 402,
     'previewImage': 'https://13.design.pages.academy/static/hotel/7.jpg',
     'city': {
-      'name': 'Paris',
+      'name': 'Amsterdam',
       'location': {
-        'latitude': 48.85661,
-        'longitude': 2.351499,
+        'latitude': 52.3909553943508,
+        'longitude': 4.85309666406198,
         'zoom': 13
       }
     },
     'location': {
-      'latitude': 48.868610000000004,
-      'longitude': 2.342499,
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
       'zoom': 16
     },
     'isFavorite': false,
@@ -29,16 +29,16 @@ const offers = [
     'price': 368,
     'previewImage': 'https://13.design.pages.academy/static/hotel/12.jpg',
     'city': {
-      'name': 'Moscow',
+      'name': 'Amsterdam',
       'location': {
-        'latitude': 48.85661,
-        'longitude': 2.351499,
+        'latitude': 52.3909553943508,
+        'longitude': 4.85309666406198,
         'zoom': 13
       }
     },
     'location': {
-      'latitude': 48.858610000000006,
-      'longitude': 2.330499,
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
       'zoom': 16
     },
     'isFavorite': true,
@@ -52,16 +52,16 @@ const offers = [
     'price': 258,
     'previewImage': 'https://13.design.pages.academy/static/hotel/11.jpg',
     'city': {
-      'name': 'Berlin',
+      'name': 'Amsterdam',
       'location': {
-        'latitude': 48.85661,
-        'longitude': 2.351499,
+        'latitude': 52.3909553943508,
+        'longitude': 4.85309666406198,
         'zoom': 13
       }
     },
     'location': {
-      'latitude': 48.834610000000005,
-      'longitude': 2.335499,
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
       'zoom': 16
     },
     'isFavorite': true,
@@ -75,42 +75,19 @@ const offers = [
     'price': 116,
     'previewImage': 'https://13.design.pages.academy/static/hotel/10.jpg',
     'city': {
-      'name': 'Paris',
+      'name': 'Amsterdam',
       'location': {
-        'latitude': 48.85661,
-        'longitude': 2.351499,
+        'latitude': 52.3909553943508,
+        'longitude': 4.85309666406198,
         'zoom': 13
       }
     },
     'location': {
-      'latitude': 48.85761,
-      'longitude': 2.358499,
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
       'zoom': 16
     },
     'isFavorite': false,
-    'isPremium': false,
-    'rating': 1.5
-  },
-  {
-    'id': 'f6e517e8-d266-48f0-9f61-8d2f2b3e6be6',
-    'title': 'Amazing and Extremely Central Flat',
-    'type': 'hotel',
-    'price': 116,
-    'previewImage': 'https://13.design.pages.academy/static/hotel/10.jpg',
-    'city': {
-      'name': 'Paris',
-      'location': {
-        'latitude': 48.85661,
-        'longitude': 2.351499,
-        'zoom': 13
-      }
-    },
-    'location': {
-      'latitude': 48.85761,
-      'longitude': 2.358499,
-      'zoom': 16
-    },
-    'isFavorite': true,
     'isPremium': false,
     'rating': 1.5
   },
