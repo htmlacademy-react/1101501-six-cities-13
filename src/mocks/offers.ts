@@ -1,4 +1,6 @@
-const offers = [
+import {TOffer} from '../types/offer';
+
+const offers: TOffer[] = [
   {
     'id': 'e253f2ea-cb5d-4c66-8408-e15afee02676',
     'title': 'The house among olive ',

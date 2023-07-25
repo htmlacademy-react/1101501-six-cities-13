@@ -1,4 +1,6 @@
-const reviews = [
+import {TReview} from '../types/review';
+
+const reviews: TReview[] = [
   [
     {
       'id': 'b041999e-e959-4452-aea1-06561bcd78e3',
