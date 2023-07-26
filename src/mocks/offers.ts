@@ -10,8 +10,8 @@ const offers: TOffer[] = [
     'city': {
       'name': 'Amsterdam',
       'location': {
-        'latitude': 52.3909553943508,
-        'longitude': 4.85309666406198,
+        'latitude': 52.3547607,
+        'longitude': 4.7391566,
         'zoom': 13
       }
     },
@@ -33,13 +33,13 @@ const offers: TOffer[] = [
     'city': {
       'name': 'Amsterdam',
       'location': {
-        'latitude': 52.3909553943508,
-        'longitude': 4.85309666406198,
+        'latitude': 52.3547607,
+        'longitude': 4.7391566,
         'zoom': 13
       }
     },
     'location': {
-      'latitude': 52.3909553943508,
+      'latitude': 52.3609553943508,
       'longitude': 4.85309666406198,
       'zoom': 16
     },
@@ -56,14 +56,14 @@ const offers: TOffer[] = [
     'city': {
       'name': 'Amsterdam',
       'location': {
-        'latitude': 52.3909553943508,
-        'longitude': 4.85309666406198,
+        'latitude': 52.3547607,
+        'longitude': 4.7391566,
         'zoom': 13
       }
     },
     'location': {
       'latitude': 52.3909553943508,
-      'longitude': 4.85309666406198,
+      'longitude': 4.929309666406198,
       'zoom': 16
     },
     'isFavorite': true,
@@ -79,14 +79,14 @@ const offers: TOffer[] = [
     'city': {
       'name': 'Amsterdam',
       'location': {
-        'latitude': 52.3909553943508,
-        'longitude': 4.85309666406198,
+        'latitude': 52.3547607,
+        'longitude': 4.7391566,
         'zoom': 13
       }
     },
     'location': {
-      'latitude': 52.3909553943508,
-      'longitude': 4.85309666406198,
+      'latitude': 52.3809553943508,
+      'longitude': 4.939309666406198,
       'zoom': 16
     },
     'isFavorite': false,

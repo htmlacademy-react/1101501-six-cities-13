@@ -4,7 +4,7 @@ type TLocation = {
   zoom: number;
 }
 
-type TCity = {
+export type TCity = {
   name: string;
   location: TLocation;
 }

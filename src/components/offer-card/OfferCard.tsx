@@ -6,18 +6,18 @@ import {AppRoute} from '../../constants';
 type TOfferCardProps = {
   offer: TOffer;
   cardType: string;
-  targetOfferId?: (id: string) => void;
+  targetOffer?: (TOffer) => void;
 }
 
-function OfferCard({ offer, cardType, targetOfferId }: TOfferCardProps): JSX.Element {
-  const {isPremium, isFavorite, previewImage, title, type, rating, price, id} = offer;
+function OfferCard({ offer, cardType, targetOffer }: TOfferCardProps): JSX.Element {
+  const {isPremium, isFavorite, previewImage, title, type, rating, price} = offer;
   const [isFavoriteOffer, setIsFavoriteOffer] = useState<boolean>(isFavorite);
   const isFavoriteOfferClickHandler = () => {
     setIsFavoriteOffer(!isFavoriteOffer);
   };
 
   return (
-    <article className={`${cardType}__card place-card`} onMouseOver={() => targetOfferId && targetOfferId(id)}>
+    <article className={`${cardType}__card place-card`} onMouseOver={() => targetOffer && targetOffer(offer)}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
