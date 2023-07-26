@@ -1,7 +1,7 @@
 import {useEffect, useRef} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import {TOffer} from '../../types/offer';
-import useMap from '../use-map/UseMap';
+import useMap from '../hooks/useMap';
 import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../constants';
 import 'leaflet/dist/leaflet.css';
 
@@ -47,7 +47,8 @@ function Map({targetOffer, offers}: TMapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  },[map, targetOffer]);
+  },[map, targetOffer, offers]);
+
   return <section className="cities__map map" ref={mapRef} />;
 }
 
