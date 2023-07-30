@@ -1,4 +1,4 @@
-export type TReview = {
+export type TReview = [{
   id: string;
   date: string;
   user: {
@@ -8,4 +8,4 @@ export type TReview = {
   };
   comment: string;
   rating: number;
-}
+}]

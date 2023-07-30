@@ -1,11 +1,18 @@
-import {TOffer} from '../../../types/offer';
+import {useState} from 'react';
 import OffersList from '../../offers-list/OffersList';
+import Map from '../../map/Map';
+import {TOffer} from '../../../types/offer';
 
 type TMainProps = {
   offers: TOffer[];
 };
 
 function Main({ offers }: TMainProps): JSX.Element {
+  const [targetOffer, setTargetOffer] = useState<TOffer>(offers[0]);
+
+  const hoverOfferInListHandler = (offer: TOffer) => {
+    setTargetOffer(offer);
+  };
 
   return (
     <main className="page__main page__main--index">
@@ -48,9 +55,9 @@ function Main({ offers }: TMainProps): JSX.Element {
       </div>
       <div className="cities">
         <div className="cities__places-container container">
-          <OffersList offers={offers} />
+          <OffersList onOfferHover={hoverOfferInListHandler} offers={offers} />
           <div className="cities__right-section">
-            <section className="cities__map map" />
+            <Map targetOffer={targetOffer} offers={offers}/>
           </div>
         </div>
       </div>

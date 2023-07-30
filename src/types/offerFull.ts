@@ -1,6 +1,6 @@
 import {TOffer} from './offer';
 
-export type TOfferFull = TOffer & {
+export type TOfferFull = Omit<TOffer, 'previewImage'> & {
   description: string;
   bedrooms: number;
   goods: string[];
