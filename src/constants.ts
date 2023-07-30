@@ -83,8 +83,6 @@ export const CITIES: TCity[] = [
   },
 ];
 
-export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
-
-export const URL_MARKER_CURRENT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const ASSETS_BASE_URL = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/';
+export const URL_MARKER_DEFAULT = `${ASSETS_BASE_URL}/pin.svg`;
+export const URL_MARKER_CURRENT = `${ASSETS_BASE_URL}/main-pin.svg`;
