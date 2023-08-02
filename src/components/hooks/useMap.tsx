@@ -10,8 +10,7 @@ function useMap(
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
   const instanceLeafletRef = useRef<Map | null>(null);
-  const {location: {latitude: lat, longitude: lng, zoom}, name} = city;
-  const currentCityRef = useRef<TCity['name']>(name);
+  const {location: {latitude: lat, longitude: lng, zoom}, name: cityName} = city;
 
   useEffect(() => {
     if (mapRef?.current && !isRenderedRef.current) {
@@ -38,13 +37,12 @@ function useMap(
       instanceLeafletRef.current = instanceLeaflet;
     }
 
-    if (currentCityRef.current !== name) {
-      instanceLeafletRef.current?.flyTo({
-        lat,
-        lng,
-      }, zoom);
-    }
-  }, [mapRef, name, lat, lng, zoom]);
+    instanceLeafletRef.current?.flyTo({
+      lat,
+      lng,
+    }, zoom);
+
+  }, [mapRef, cityName, lat, lng, zoom]);
 
   return map;
 }
