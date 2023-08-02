@@ -7,13 +7,11 @@ import Favorites from '../pages/page-favorites/Favorites';
 import Layout from '../layout/Layout';
 import PrivateRoute from '../private-route/PrivateRoute';
 import { AppRoute, AuthorizationStatus } from '../../constants';
-import {TOffer} from '../../types/offer';
+import {useAppSelector} from '../hooks';
 
-type TAppProps = {
-  offers: TOffer[];
-};
+function App(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
 
-function App({ offers }: TAppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>

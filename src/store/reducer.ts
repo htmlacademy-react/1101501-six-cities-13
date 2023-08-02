@@ -1,16 +1,19 @@
 import offers from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
 import {TOffer} from '../types/offer';
-import {changeCity, fillOffers} from './action';
+import {changeCity, fillOffersFromCity} from './action';
 
 type TInitialState = {
   city: string;
   offers: TOffer[];
+  offersFromCity: TOffer[];
+
 }
 
 const initialState: TInitialState = {
-  city: 'Amsterdam',
-  offers: offers
+  city: 'Paris',
+  offers: offers,
+  offersFromCity: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -18,8 +21,8 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
     })
-    .addCase(fillOffers, (state) => {
-      state.offers = offers;
+    .addCase(fillOffersFromCity, (state) => {
+      state.offersFromCity = offers.filter((offer) => offer.city.name === state.city);
     });
 });
 

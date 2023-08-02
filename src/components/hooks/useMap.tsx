@@ -1,23 +1,26 @@
 import {MutableRefObject, useEffect, useRef, useState} from 'react';
 import {Map, TileLayer} from 'leaflet';
-import {TOffer} from '../../types/offer';
+import {TCity} from '../../types/offer';
 
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  offer: TOffer
+  city: TCity
 ):Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
+  const instanceLeafletRef = useRef<Map | null>(null);
+  const {location: {latitude: lat, longitude: lng, zoom}, name} = city;
+  const currentCityRef = useRef<TCity['name']>(name);
 
   useEffect(() => {
     if (mapRef?.current && !isRenderedRef.current) {
       const instanceLeaflet = new Map(mapRef.current, {
         center: {
-          lat: offer.location.latitude,
-          lng: offer.location.longitude
+          lat,
+          lng,
         },
-        zoom: 10
+        zoom
       });
 
       const layerLeaflet = new TileLayer(
@@ -30,10 +33,18 @@ function useMap(
 
       instanceLeaflet.addLayer(layerLeaflet);
       setMap(instanceLeaflet);
-      isRenderedRef.current = true;
 
+      isRenderedRef.current = true;
+      instanceLeafletRef.current = instanceLeaflet;
     }
-  }, [mapRef, offer]);
+
+    if (currentCityRef.current !== name) {
+      instanceLeafletRef.current?.flyTo({
+        lat,
+        lng,
+      }, zoom);
+    }
+  }, [mapRef, name, lat, lng, zoom]);
 
   return map;
 }

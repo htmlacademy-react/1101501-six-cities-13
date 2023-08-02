@@ -18,13 +18,15 @@ const currentCustomIcon = new Icon({
 });
 
 type TMapProps = {
-  targetOffer: TOffer;
+  targetOffer: TOffer | undefined;
   offers: TOffer[];
+  pageType: string;
 }
 
-function Map({targetOffer, offers}: TMapProps): JSX.Element {
+function Map({targetOffer, offers, pageType}: TMapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, targetOffer);
+  const [{city}] = offers;
+  const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
@@ -49,7 +51,7 @@ function Map({targetOffer, offers}: TMapProps): JSX.Element {
     }
   },[map, targetOffer, offers]);
 
-  return <section className="cities__map map" ref={mapRef} />;
+  return <section className={`${pageType}__map map`} ref={mapRef} />;
 }
 
 export default Map;
