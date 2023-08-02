@@ -2,13 +2,17 @@ import {useState} from 'react';
 import OffersList from '../../offers-list/OffersList';
 import Map from '../../map/Map';
 import {TOffer} from '../../../types/offer';
+import {useAppSelector} from '../../hooks';
+import CitiesList from '../../cities-list/CitiesList';
 
 type TMainProps = {
   offers: TOffer[];
 };
 
 function Main({ offers }: TMainProps): JSX.Element {
-  const [targetOffer, setTargetOffer] = useState<TOffer>(offers[0]);
+  const selectedCity = useAppSelector((state) => state.city);
+  const selectedCityOffers = offers.filter((offer) => offer.city.name === selectedCity);
+  const [targetOffer, setTargetOffer] = useState<TOffer | undefined>(undefined);
 
   const hoverOfferInListHandler = (offer: TOffer) => {
     setTargetOffer(offer);
@@ -19,45 +23,14 @@ function Main({ offers }: TMainProps): JSX.Element {
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <ul className="locations__list tabs__list">
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Paris</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Cologne</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Brussels</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item tabs__item--active">
-                <span>Amsterdam</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Hamburg</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Dusseldorf</span>
-              </a>
-            </li>
-          </ul>
+          <CitiesList selectedCity={selectedCity} offers={offers}/>
         </section>
       </div>
       <div className="cities">
         <div className="cities__places-container container">
-          <OffersList onOfferHover={hoverOfferInListHandler} offers={offers} />
+          <OffersList onOfferHover={hoverOfferInListHandler} selectedCity={selectedCity} offers={selectedCityOffers} />
           <div className="cities__right-section">
-            <Map targetOffer={targetOffer} offers={offers}/>
+            <Map targetOffer={targetOffer} offers={selectedCityOffers} pageType={'cities'}/>
           </div>
         </div>
       </div>
