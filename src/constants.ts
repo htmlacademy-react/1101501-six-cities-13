@@ -97,6 +97,6 @@ export const CityMap: Record<CityName, TCity> = {
   }
 };
 
-export const ASSETS_BASE_URL = '../../../markup/img';
+export const ASSETS_BASE_URL = '/img';
 export const URL_MARKER_DEFAULT = `${ASSETS_BASE_URL}/pin.svg`;
 export const URL_MARKER_CURRENT = `${ASSETS_BASE_URL}/pin-active.svg`;
