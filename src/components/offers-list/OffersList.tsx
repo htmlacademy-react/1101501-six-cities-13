@@ -1,7 +1,10 @@
 import {TCity, TOffer} from '../../types/offer';
 import OfferCard from '../offer-card/OfferCard';
-import OfferSortForm from '../offer-sort-form/OfferSortForm';
-import {ClassNameForOfferCardType} from '../../constants';
+import SortingForm from '../offer-sort-form/SortingForm';
+import {ClassNameForOfferCardType, SortingMap} from '../../constants';
+import {TSorting} from '../../types/sorting';
+import {useState} from 'react';
+import {sort} from '../../utils/utils';
 
 type TOffersListProps = {
   offers: TOffer[];
@@ -10,7 +13,9 @@ type TOffersListProps = {
 }
 
 function OffersList({ offers, onOfferHover, selectedCity }: TOffersListProps): JSX.Element {
-  const offersCount = offers.length;
+  const [sortingType, setSortingType] = useState<TSorting>(SortingMap.Popular);
+  const sortOffers = sort[sortingType](offers);
+  const offersCount = sortOffers.length;
 
   return (
     <section className="cities__places places">
@@ -18,9 +23,12 @@ function OffersList({ offers, onOfferHover, selectedCity }: TOffersListProps): J
       <b className="places__found">
         {offersCount} places to stay in {selectedCity.name}
       </b>
-      <OfferSortForm />
+      <SortingForm sortingType={sortingType} onChange={(newSortingType) => {
+        setSortingType(newSortingType);
+      }}
+      />
       <div className="cities__places-list places__list tabs__content">
-        {offers.map((offer) => <OfferCard cardType={ClassNameForOfferCardType.Cities} key={offer.id} offer={offer} targetOffer={onOfferHover}/>)}
+        {sortOffers.map((offer) => <OfferCard cardType={ClassNameForOfferCardType.Cities} key={offer.id} offer={offer} targetOffer={onOfferHover}/>)}
       </div>
     </section>
   );

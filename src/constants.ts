@@ -95,7 +95,14 @@ export const CityMap: Record<CityName, TCity> = {
       zoom: 10,
     }
   }
-};
+} as const;
+
+export enum SortingMap {
+    Popular = 'Popular',
+    LowToHigh = 'Price: low to high',
+    HighToLow = 'Price: high to low',
+    TopRated = 'Top rated first',
+}
 
 export const ASSETS_BASE_URL = '/img';
 export const URL_MARKER_DEFAULT = `${ASSETS_BASE_URL}/pin.svg`;
