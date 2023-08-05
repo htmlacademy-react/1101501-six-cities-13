@@ -7,16 +7,14 @@ import Favorites from '../pages/page-favorites/Favorites';
 import Layout from '../layout/Layout';
 import PrivateRoute from '../private-route/PrivateRoute';
 import { AppRoute, AuthorizationStatus } from '../../constants';
-import {useAppSelector} from '../hooks';
 
 function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root} element={<Layout />}>
-          <Route index element={<Main offers={offers} />} />
+          <Route index element={<Main />} />
           <Route path={AppRoute.Login} element={<Login />} />
           <Route path={AppRoute.Offer}>
             <Route path=':id' element={<Offer />} />
@@ -25,7 +23,7 @@ function App(): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authStatus={AuthorizationStatus.Auth}>
-                <Favorites offers={offers}/>
+                <Favorites />
               </PrivateRoute>
             }
           />

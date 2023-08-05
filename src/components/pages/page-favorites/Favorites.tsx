@@ -1,12 +1,9 @@
-import {TOffer} from '../../../types/offer';
 import OfferCard from '../../offer-card/OfferCard';
 import {ClassNameForOfferCardType} from '../../../constants';
+import {useAppSelector} from '../../hooks';
 
-type TFavoritesProps = {
-  offers: TOffer[];
-}
-
-function Favorites({ offers }: TFavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
   const favoriteOffers = offers.filter((offer) => !!offer.isFavorite);
   const cities:string[] = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
 

@@ -7,6 +7,11 @@ export enum AppRoute {
   Offer = '/offer',
 }
 
+export enum NameSpace {
+  Main = 'MAIN',
+  Offer = 'OFFER',
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -32,16 +37,25 @@ export const OFFER_COMMENT_RATINGS = [
   { ratingValue: 5, ratingText: 'perfect' },
 ] as const;
 
-export const CITIES: TCity[] = [
-  {
-    name: 'Paris',
+export enum CityName {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
+
+export const CityMap: Record<CityName, TCity> = {
+  [CityName.Paris]: {
+    name: CityName.Paris,
     location: {
       latitude: 48.8567801,
       longitude: 2.3315211,
       zoom: 10,
     }
   },
-  {
+  [CityName.Cologne]: {
     name: 'Cologne',
     location: {
       latitude: 50.9461149,
@@ -49,7 +63,7 @@ export const CITIES: TCity[] = [
       zoom: 10,
     }
   },
-  {
+  [CityName.Brussels]: {
     name: 'Brussels',
     location: {
       latitude: 50.8552034,
@@ -57,7 +71,7 @@ export const CITIES: TCity[] = [
       zoom: 10,
     }
   },
-  {
+  [CityName.Amsterdam]: {
     name: 'Amsterdam',
     location: {
       latitude: 52.3547607,
@@ -65,7 +79,7 @@ export const CITIES: TCity[] = [
       zoom: 10,
     }
   },
-  {
+  [CityName.Hamburg]: {
     name: 'Hamburg',
     location: {
       latitude: 53.5586627,
@@ -73,16 +87,16 @@ export const CITIES: TCity[] = [
       zoom: 10,
     }
   },
-  {
+  [CityName.Dusseldorf]: {
     name: 'Dusseldorf',
     location: {
       latitude: 51.238554,
       longitude: 6.6495462,
       zoom: 10,
     }
-  },
-];
+  }
+};
 
-export const ASSETS_BASE_URL = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/';
+export const ASSETS_BASE_URL = '../../../markup/img';
 export const URL_MARKER_DEFAULT = `${ASSETS_BASE_URL}/pin.svg`;
-export const URL_MARKER_CURRENT = `${ASSETS_BASE_URL}/main-pin.svg`;
+export const URL_MARKER_CURRENT = `${ASSETS_BASE_URL}/pin-active.svg`;

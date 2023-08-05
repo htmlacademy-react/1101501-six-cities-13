@@ -12,7 +12,7 @@ type TOfferCardProps = {
 function OfferCard({ offer, cardType, targetOffer }: TOfferCardProps): JSX.Element {
   const {isPremium, isFavorite, previewImage, title, type, rating, price} = offer;
   const [isFavoriteOffer, setIsFavoriteOffer] = useState<boolean>(isFavorite);
-  const isFavoriteOfferClickHandler = () => {
+  const handleFavoriteOfferClick = () => {
     setIsFavoriteOffer(!isFavoriteOffer);
   };
 
@@ -42,7 +42,7 @@ function OfferCard({ offer, cardType, targetOffer }: TOfferCardProps): JSX.Eleme
           </div>
           <button className={`place-card__bookmark-button ${
             isFavoriteOffer ? 'place-card__bookmark-button--active' : ''
-          } button`} type="button" onClick={isFavoriteOfferClickHandler}
+          } button`} type="button" onClick={handleFavoriteOfferClick}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark"/>

@@ -1,4 +1,4 @@
-import {TOffer} from '../../types/offer';
+import {TCity, TOffer} from '../../types/offer';
 import OfferCard from '../offer-card/OfferCard';
 import OfferSortForm from '../offer-sort-form/OfferSortForm';
 import {ClassNameForOfferCardType} from '../../constants';
@@ -6,18 +6,17 @@ import {ClassNameForOfferCardType} from '../../constants';
 type TOffersListProps = {
   offers: TOffer[];
   onOfferHover: (TOffer) => void;
-  selectedCity: string;
+  selectedCity: TCity;
 }
 
 function OffersList({ offers, onOfferHover, selectedCity }: TOffersListProps): JSX.Element {
   const offersCount = offers.length;
-  // const [targetOffer, setTargetOffer] = useState<string>('');
 
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {offersCount} places to stay in {selectedCity}
+        {offersCount} places to stay in {selectedCity.name}
       </b>
       <OfferSortForm />
       <div className="cities__places-list places__list tabs__content">
