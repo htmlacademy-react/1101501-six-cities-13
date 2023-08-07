@@ -107,3 +107,6 @@ export enum SortingMap {
 export const ASSETS_BASE_URL = '/img';
 export const URL_MARKER_DEFAULT = `${ASSETS_BASE_URL}/pin.svg`;
 export const URL_MARKER_CURRENT = `${ASSETS_BASE_URL}/pin-active.svg`;
+
+export const BACKEND_BASE_URL = 'https://13.design.pages.academy/six-cities';
+export const REQUEST_TIMEOUT = 5000;
