@@ -1,4 +1,4 @@
-import index from '../store';
+import store from '../store/store';
 
-export type TAppState = ReturnType<typeof index.getState>
-export type TAppDispatch = typeof index.dispatch
+export type TAppState = ReturnType<typeof store.getState>
+export type TAppDispatch = typeof store.dispatch

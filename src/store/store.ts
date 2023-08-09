@@ -3,7 +3,7 @@ import reducer from './reducer';
 import {createAPI} from '../services/api';
 
 const api = createAPI();
-const index = configureStore({
+const store = configureStore({
   reducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     thunk: {
@@ -12,4 +12,4 @@ const index = configureStore({
   }),
 });
 
-export default index;
+export default store;
