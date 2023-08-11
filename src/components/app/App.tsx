@@ -7,8 +7,18 @@ import Favorites from '../pages/page-favorites/Favorites';
 import Layout from '../layout/Layout';
 import PrivateRoute from '../private-route/PrivateRoute';
 import { AppRoute, AuthorizationStatus } from '../../constants';
+import {useAppSelector} from '../hooks';
+import Spinner from '../loading/spinner';
 
 function App(): JSX.Element {
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const isQuestionsDataLoading = useAppSelector((state) => state.isOffersLoading);
+
+  if (authStatus === AuthorizationStatus.Unknown || isQuestionsDataLoading) {
+    return (
+      <Spinner />
+    );
+  }
 
   return (
     <BrowserRouter>

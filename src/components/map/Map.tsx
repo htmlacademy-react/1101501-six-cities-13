@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
-import {TOffer} from '../../types/offer';
+import {TCity, TOffer} from '../../types/offer';
 import useMap from '../hooks/useMap';
 import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../constants';
 import 'leaflet/dist/leaflet.css';
@@ -15,13 +15,13 @@ const currentCustomIcon = new Icon({
 
 type TMapProps = {
   targetOffer: TOffer | undefined;
+  city: TCity;
   offers: TOffer[];
   pageType: string;
 }
 
-function Map({targetOffer, offers, pageType}: TMapProps): JSX.Element {
+function Map({targetOffer, city, offers, pageType}: TMapProps): JSX.Element {
   const mapRef = useRef(null);
-  const [{city}] = offers;
   const map = useMap(mapRef, city);
 
   useEffect(() => {

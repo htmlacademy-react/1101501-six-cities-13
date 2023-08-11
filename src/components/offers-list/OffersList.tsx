@@ -21,7 +21,7 @@ function OffersList({ offers, onOfferHover, selectedCity }: TOffersListProps): J
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {offersCount} places to stay in {selectedCity.name}
+        {offersCount} places to stay in {selectedCity?.name}
       </b>
       <SortingForm sortingType={sortingType} onChange={(newSortingType) => {
         setSortingType(newSortingType);

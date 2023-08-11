@@ -1,32 +1,53 @@
-import offers from '../mocks/offers';
+// import offers from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
-import {TCity, TOffer} from '../types/offer';
-import {setActiveCity, fetchOffersFromCity, fetchOffers} from './action';
-import {CityMap} from '../constants';
+import {TOffer} from '../types/offer';
+import {
+  setActiveCity,
+  fetchOffersFromCity,
+  fetchOffers,
+  requireAuthorization,
+  fetchError,
+  setOffersLoadingStatus
+} from './action';
+import {AuthorizationStatus, DEFAULT_LOCATION} from '../constants';
 
 type TInitialState = {
-  city: TCity;
+  city: string;
   offers: TOffer[];
   offersFromCity: TOffer[];
-
+  authorizationStatus: typeof AuthorizationStatus;
+  error: string | null;
+  isOffersLoading: boolean;
 }
 
 const initialState: TInitialState = {
-  city: CityMap.Paris,
-  offers: offers,
+  city: DEFAULT_LOCATION,
+  offers: [],
   offersFromCity: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
+  isOffersLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(fetchOffers, (state) => {
-      state.offers = offers;
+    .addCase(fetchOffers, (state, action) => {
+      state.offers = action.payload;
     })
     .addCase(setActiveCity, (state, action) => {
       state.city = action.payload;
     })
-    .addCase(fetchOffersFromCity, (state) => {
-      state.offersFromCity = offers.filter((offer) => offer.city.name === state.city.name);
+    .addCase(fetchOffersFromCity, (state, action) => {
+      state.offersFromCity = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(fetchError, (state, action) => {
+      state.error = action.payload;
+    })
+    .addCase(setOffersLoadingStatus, (state, action) => {
+      state.isOffersLoading = action.payload;
     });
 });
 

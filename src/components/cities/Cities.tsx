@@ -4,12 +4,12 @@ import {useState} from 'react';
 import {TCity, TOffer} from '../../types/offer';
 
 type TCities = {
-  city: TCity;
+  city: TCity['name'];
   offers: TOffer[];
 }
 
 export function Cities({ city, offers }: TCities): JSX.Element {
-  const activeCityOffers = offers.filter((offer) => offer.city.name === city.name);
+  const cityInfo = offers.find((cityData) => cityData?.city.name === city)?.city;
   const [activeOffer, setActiveOffer] = useState<TOffer | undefined>(undefined);
 
   const handleCardHover = (offer: TOffer) => {
@@ -19,9 +19,9 @@ export function Cities({ city, offers }: TCities): JSX.Element {
   return (
     <div className="cities">
       <div className="cities__places-container container">
-        <OffersList onOfferHover={handleCardHover} selectedCity={city} offers={activeCityOffers} />
+        <OffersList onOfferHover={handleCardHover} selectedCity={cityInfo} offers={offers} />
         <div className="cities__right-section">
-          <Map targetOffer={activeOffer} offers={activeCityOffers} pageType={'cities'}/>
+          <Map city={cityInfo} targetOffer={activeOffer} offers={offers} pageType={'cities'}/>
         </div>
       </div>
     </div>
