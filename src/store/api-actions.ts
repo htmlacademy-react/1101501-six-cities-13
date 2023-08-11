@@ -46,7 +46,7 @@ export const loginAction = createAsyncThunk<
     },
   );
 
-export const clearErrorAction = createAsyncThunk(
+export const clearErrorAction = createAsyncThunk<void>(
   `${NameSpace.Data}/clearError`,
   () => {
     setTimeout(
