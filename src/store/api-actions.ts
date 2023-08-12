@@ -32,7 +32,7 @@ export const logIn = createAsyncThunk<
   TAuthUserData, TAuthData, {dispatch: TAppDispatch; state: TAppState; extra: AxiosInstance}
   >(
     `${NameSpace.User}/login`,
-    async ({login: email, password}, {extra: api}) => {
+    async ({email, password}, {extra: api}) => {
       const {data} = await api.post<TAuthUserData>(APIRoute.Login, {email, password});
       setToken(data.token);
       return data;

@@ -1,6 +1,6 @@
 // import offers from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
-import {checkAuth, fetchOffers} from './api-actions';
+import {checkAuth, fetchOffers, logIn} from './api-actions';
 import {TOffer} from '../types/offer';
 import {fetchError, setActiveCity} from './action';
 import {AuthorizationStatus, DEFAULT_LOCATION, RequestStatus} from '../constants';
@@ -10,10 +10,11 @@ type TInitialState = {
   city: string;
   offers: TOffer[];
   offersFromCity: TOffer[];
-  authorizationStatus: typeof AuthorizationStatus;
+  authorizationStatus: AuthorizationStatus;
   error: string | null;
-  fetchOffersStatus: typeof RequestStatus;
+  fetchOffersStatus: RequestStatus;
   user: TAuthUserData | null;
+  loginStatus: RequestStatus;
 }
 
 const initialState: TInitialState = {
@@ -24,6 +25,7 @@ const initialState: TInitialState = {
   error: null,
   fetchOffersStatus: RequestStatus.Idle,
   user: null,
+  loginStatus: RequestStatus.Idle
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -49,6 +51,17 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(checkAuth.rejected, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
       state.user = null;
+    })
+    .addCase(logIn.pending, (state) => {
+      state.loginStatus = RequestStatus.Pending;
+    })
+    .addCase(logIn.fulfilled, (state, action) => {
+      state.loginStatus = RequestStatus.Success;
+      state.authorizationStatus = AuthorizationStatus.Auth;
+      state.user = action.payload;
+    })
+    .addCase(logIn.rejected, (state) => {
+      state.loginStatus = RequestStatus.Rejected;
     })
     .addCase(setActiveCity, (state, action) => {
       state.city = action.payload;

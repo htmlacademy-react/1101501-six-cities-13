@@ -24,7 +24,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path={AppRoute.Root} element={<Layout authStatus={authStatus} />}>
           <Route index element={<Main />} />
-          <Route path={AppRoute.Login} element={<Login />} />
+          <Route path={AppRoute.Login} element={<Login authStatus={authStatus} />} />
           <Route path={AppRoute.Offer}>
             <Route path=':id' element={<Offer />} />
           </Route>
