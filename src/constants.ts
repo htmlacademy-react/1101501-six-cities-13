@@ -23,6 +23,13 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum RequestStatus {
+  Idle = 'Idle',
+  Pending = 'Pending',
+  Success = 'Success',
+  Rejected = 'Rejected',
+}
+
 export enum ClassNameForOfferCardType {
   Cities = 'cities',
   Favorites = 'favorites',

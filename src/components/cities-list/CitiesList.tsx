@@ -2,7 +2,7 @@ import {TCity} from '../../types/offer';
 import {useAppDispatch} from '../hooks';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
-import {setActiveCity, fetchOffersFromCity} from '../../store/action';
+import {setActiveCity} from '../../store/action';
 import {CityNames} from '../../constants';
 
 type TCitiesProps = {
@@ -26,7 +26,6 @@ function CitiesList({ selectedCity }: TCitiesProps): JSX.Element {
             onClick={(e) => {
               e.preventDefault();
               dispatch(setActiveCity(city));
-              dispatch(fetchOffersFromCity());
             }}
             to="/"
             >
