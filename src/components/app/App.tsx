@@ -22,7 +22,7 @@ function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Root} element={<Layout />}>
+        <Route path={AppRoute.Root} element={<Layout authStatus={authStatus} />}>
           <Route index element={<Main />} />
           <Route path={AppRoute.Login} element={<Login />} />
           <Route path={AppRoute.Offer}>
