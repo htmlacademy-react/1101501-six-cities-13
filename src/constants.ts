@@ -49,6 +49,11 @@ export const OFFER_COMMENT_RATINGS = [
   { ratingValue: 5, ratingText: 'perfect' },
 ] as const;
 
+export const MONTHS = [
+  'January','February','March','April','May','June','July',
+  'August','September','October','November','December'
+] as const;
+
 export const CityNames: string[] = [
   'Paris',
   'Cologne',
