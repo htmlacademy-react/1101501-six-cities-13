@@ -1,10 +1,75 @@
-function Login(): JSX.Element {
+import {AuthorizationStatus, RequestStatus} from '../../../constants';
+import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {TAuthData} from '../../../types/auth-data';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {logIn} from '../../../store/api-actions';
+
+type TChangeEvent = ChangeEvent<HTMLInputElement>
+type TSubmitEvent = FormEvent
+
+type TLoginProps = {
+  authStatus: AuthorizationStatus;
+}
+
+const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+const PASSWORD_INVALID_MESSAGE = 'Password must contain more than 8 chars and at least one letter and one digit';
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const EMAIL_INVALID_MESSAGE = 'Please, enter correct email address';
+const FAILED_SUBMIT_FORM = 'Failed submit form. Please, try again!';
+
+function Login({ authStatus }: TLoginProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const logInStatus = useAppSelector((state) => state.loginStatus);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<TAuthData>({
+    email: '',
+    password: '',
+  });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (logInStatus === RequestStatus.Rejected) {
+      setErrorMessage(FAILED_SUBMIT_FORM);
+    }
+  },[logInStatus]);
+
+  const handleFormChange = (evt: TChangeEvent) => {
+    const {name, value} = evt.target;
+
+    if (errorMessage) {
+      setErrorMessage(null);
+    }
+    setFormData({...formData, [name]: value});
+  };
+
+  const handleFormSubmit = (evt: TSubmitEvent) => {
+    evt.preventDefault();
+    if (!EMAIL_REGEX.test(formData.email)) {
+      setErrorMessage(EMAIL_INVALID_MESSAGE);
+      return;
+    }
+    if (!PASSWORD_REGEX.test(formData.password)) {
+      setErrorMessage(PASSWORD_INVALID_MESSAGE);
+
+    }
+
+    dispatch(logIn(formData));
+
+  };
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      navigate('/');
+    }
+  }, [authStatus]);
+
   return (
     <main className="page__main page__main--login">
       <div className="page__login-container container">
         <section className="login">
           <h1 className="login__title">Sign in</h1>
-          <form className="login__form form" action="#" method="post">
+          <form className="login__form form" action="#" method="post" onSubmit={handleFormSubmit}>
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">E-mail</label>
               <input
@@ -12,7 +77,8 @@ function Login(): JSX.Element {
                 type="email"
                 name="email"
                 placeholder="Email"
-                required
+                value={formData.email}
+                onChange={handleFormChange}
               />
             </div>
             <div className="login__input-wrapper form__input-wrapper">
@@ -20,11 +86,13 @@ function Login(): JSX.Element {
               <input
                 className="login__input form__input"
                 type="password"
+                value={formData.password}
                 name="password"
                 placeholder="Password"
-                required
+                onChange={handleFormChange}
               />
             </div>
+            {errorMessage && <div className="login__input-wrapper form__input-wrapper">{errorMessage}</div>}
             <button className="login__submit form__submit button" type="submit">
               Sign in
             </button>

@@ -6,15 +6,14 @@ import Offer from '../pages/page-offer/Offer';
 import Favorites from '../pages/page-favorites/Favorites';
 import Layout from '../layout/Layout';
 import PrivateRoute from '../private-route/PrivateRoute';
-import { AppRoute, AuthorizationStatus } from '../../constants';
+import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../hooks';
 import Spinner from '../loading/spinner';
 
 function App(): JSX.Element {
   const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const isQuestionsDataLoading = useAppSelector((state) => state.isOffersLoading);
 
-  if (authStatus === AuthorizationStatus.Unknown || isQuestionsDataLoading) {
+  if ((authStatus === AuthorizationStatus.Unknown)) {
     return (
       <Spinner />
     );
@@ -23,16 +22,16 @@ function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Root} element={<Layout />}>
+        <Route path={AppRoute.Root} element={<Layout authStatus={authStatus} />}>
           <Route index element={<Main />} />
-          <Route path={AppRoute.Login} element={<Login />} />
+          <Route path={AppRoute.Login} element={<Login authStatus={authStatus} />} />
           <Route path={AppRoute.Offer}>
             <Route path=':id' element={<Offer />} />
           </Route>
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute authStatus={authStatus}>
                 <Favorites />
               </PrivateRoute>
             }

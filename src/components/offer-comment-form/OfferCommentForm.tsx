@@ -21,12 +21,12 @@ function OfferCommentForm(): JSX.Element {
     && (OfferCommentLimit.CommentMinLength <= formData.review.length)
   );
 
-  const changeCommentHandler = (evt: TChangeEvent) => {
+  const handleCommentChange = (evt: TChangeEvent) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
   };
 
-  const changeRatingHandler = (rating: number) => {
+  const handleRatingChange = (rating: number) => {
     setFormData({...formData, rating});
   };
 
@@ -40,14 +40,14 @@ function OfferCommentForm(): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <OfferRating initialValue={formData.rating} onRatingChange={changeRatingHandler} />
+      <OfferRating initialValue={formData.rating} onRatingChange={handleRatingChange} />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.review}
-        onChange={changeCommentHandler}
+        onChange={handleCommentChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
