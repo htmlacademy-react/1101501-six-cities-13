@@ -4,7 +4,7 @@ import SortingForm from '../offer-sort-form/SortingForm';
 import {ClassNameForOfferCardType, SortingMap} from '../../constants';
 import {TSorting} from '../../types/sorting';
 import {useState} from 'react';
-import {sort} from '../../utils/utils';
+import {sort} from '../../utils/sorting';
 
 type TOffersListProps = {
   offers: TOffer[];

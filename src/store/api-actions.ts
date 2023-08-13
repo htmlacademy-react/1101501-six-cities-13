@@ -7,6 +7,7 @@ import {TOffer} from '../types/offer';
 import {TAuthData} from '../types/auth-data';
 import {TAuthUserData} from '../types/user-data';
 import {setToken} from '../services/token';
+import {TOfferFull} from '../types/offerFull';
 
 export const fetchOffers = createAsyncThunk<
   TOffer[], undefined, {dispatch: TAppDispatch; state: TAppState; extra: AxiosInstance}
@@ -14,6 +15,16 @@ export const fetchOffers = createAsyncThunk<
     `${NameSpace.Main}/fetchOffers`,
     async (_arg, {extra: api}) => {
       const {data} = await api.get<TOffer[]>(APIRoute.Offers);
+      return data;
+    }
+  );
+
+export const fetchOffer = createAsyncThunk<
+  TOfferFull, TOfferFull['id'], {dispatch: TAppDispatch; state: TAppState; extra: AxiosInstance}
+  >(
+    `${NameSpace.Offer}/fetchOffer`,
+    async (offerId, {extra: api}) => {
+      const {data} = await api.get<TOfferFull>(`${APIRoute.Offers}/${offerId}`);
       return data;
     }
   );

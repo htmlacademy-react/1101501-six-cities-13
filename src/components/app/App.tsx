@@ -13,7 +13,7 @@ import Spinner from '../loading/spinner';
 function App(): JSX.Element {
   const authStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if ((authStatus === AuthorizationStatus.Unknown)) {
+  if (authStatus === AuthorizationStatus.Unknown) {
     return (
       <Spinner />
     );
