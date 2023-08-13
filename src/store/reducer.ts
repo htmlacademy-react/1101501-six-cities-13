@@ -1,31 +1,40 @@
 // import offers from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
-import {checkAuth, fetchOffers, logIn} from './api-actions';
+import {checkAuth, fetchNearPlaces, fetchOffer, fetchOffers, logIn} from './api-actions';
 import {TOffer} from '../types/offer';
 import {fetchError, setActiveCity} from './action';
 import {AuthorizationStatus, DEFAULT_LOCATION, RequestStatus} from '../constants';
 import {TAuthUserData} from '../types/user-data';
+import {TOfferFull} from '../types/offerFull';
 
 type TInitialState = {
   city: string;
   offers: TOffer[];
-  offersFromCity: TOffer[];
-  authorizationStatus: AuthorizationStatus;
-  error: string | null;
   fetchOffersStatus: RequestStatus;
+  offer: TOfferFull | null;
+  fetchOfferStatus: RequestStatus;
+  nearPlaces: TOffer[];
+  fetchNearPlacesStatus: RequestStatus;
+  offersFromCity: TOffer[];
+  error: string | null;
   user: TAuthUserData | null;
   loginStatus: RequestStatus;
+  authorizationStatus: AuthorizationStatus;
 }
 
 const initialState: TInitialState = {
   city: DEFAULT_LOCATION,
   offers: [],
-  offersFromCity: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
-  error: null,
   fetchOffersStatus: RequestStatus.Idle,
+  offer: null,
+  fetchOfferStatus: RequestStatus.Idle,
+  nearPlaces: [],
+  fetchNearPlacesStatus: RequestStatus.Idle,
+  offersFromCity: [],
+  error: null,
   user: null,
-  loginStatus: RequestStatus.Idle
+  loginStatus: RequestStatus.Idle,
+  authorizationStatus: AuthorizationStatus.Unknown
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -39,6 +48,27 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOffers.rejected, (state) => {
       state.fetchOffersStatus = RequestStatus.Rejected;
+    })
+    .addCase(fetchOffer.pending, (state) => {
+      state.fetchOfferStatus = RequestStatus.Pending;
+      state.offer = null;
+    })
+    .addCase(fetchOffer.fulfilled, (state, action) => {
+      state.fetchOfferStatus = RequestStatus.Success;
+      state.offer = action.payload;
+    })
+    .addCase(fetchOffer.rejected, (state) => {
+      state.fetchOfferStatus = RequestStatus.Rejected;
+    })
+    .addCase(fetchNearPlaces.pending, (state) => {
+      state.fetchNearPlacesStatus = RequestStatus.Pending;
+    })
+    .addCase(fetchNearPlaces.fulfilled, (state, action) => {
+      state.fetchNearPlacesStatus = RequestStatus.Success;
+      state.nearPlaces = action.payload;
+    })
+    .addCase(fetchNearPlaces.rejected, (state) => {
+      state.fetchNearPlacesStatus = RequestStatus.Rejected;
     })
     .addCase(checkAuth.pending, (state) => {
       state.authorizationStatus = AuthorizationStatus.Unknown;

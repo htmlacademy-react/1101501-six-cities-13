@@ -5,9 +5,15 @@ export enum AppRoute {
   Offer = '/offer',
 }
 
+export enum MapPageType {
+  Cities = 'cities',
+  Offer = 'offer',
+}
+
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
+  Nearby = '/nearby'
 }
 
 export enum NameSpace {
@@ -33,6 +39,7 @@ export enum RequestStatus {
 export enum ClassNameForOfferCardType {
   Cities = 'cities',
   Favorites = 'favorites',
+  NearPlaces = 'near-places'
 }
 
 export enum OfferCommentLimit {
@@ -47,6 +54,11 @@ export const OFFER_COMMENT_RATINGS = [
   { ratingValue: 3, ratingText: 'not bad' },
   { ratingValue: 4, ratingText: 'good' },
   { ratingValue: 5, ratingText: 'perfect' },
+] as const;
+
+export const MONTHS = [
+  'January','February','March','April','May','June','July',
+  'August','September','October','November','December'
 ] as const;
 
 export const CityNames: string[] = [
@@ -74,3 +86,5 @@ export const REQUEST_TIMEOUT = 5000;
 export const TIMEOUT_SHOW_ERROR = 2000;
 
 export const DEFAULT_LOCATION = 'Paris';
+
+export const MAX_NEAR_PLACES_COUNT = 3;
