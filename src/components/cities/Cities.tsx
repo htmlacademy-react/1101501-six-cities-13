@@ -2,6 +2,7 @@ import OffersList from '../offers-list/OffersList';
 import Map from '../map/Map';
 import {useState} from 'react';
 import {TCity, TOffer} from '../../types/offer';
+import {MapPageType} from '../../constants';
 
 type TCities = {
   city: TCity['name'];
@@ -21,7 +22,7 @@ export function Cities({ city, offers }: TCities): JSX.Element {
       <div className="cities__places-container container">
         <OffersList onOfferHover={handleCardHover} selectedCity={cityInfo} offers={offers} />
         <div className="cities__right-section">
-          <Map city={cityInfo} targetOffer={activeOffer} offers={offers} pageType={'cities'}/>
+          <Map city={cityInfo} targetOffer={activeOffer} offers={offers} pageType={MapPageType.Cities}/>
         </div>
       </div>
     </div>

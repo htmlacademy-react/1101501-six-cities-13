@@ -1,6 +1,6 @@
 // import offers from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
-import {checkAuth, fetchOffer, fetchOffers, logIn} from './api-actions';
+import {checkAuth, fetchNearPlaces, fetchOffer, fetchOffers, logIn} from './api-actions';
 import {TOffer} from '../types/offer';
 import {fetchError, setActiveCity} from './action';
 import {AuthorizationStatus, DEFAULT_LOCATION, RequestStatus} from '../constants';
@@ -13,6 +13,8 @@ type TInitialState = {
   fetchOffersStatus: RequestStatus;
   offer: TOfferFull | null;
   fetchOfferStatus: RequestStatus;
+  nearPlaces: TOffer[];
+  fetchNearPlacesStatus: RequestStatus;
   offersFromCity: TOffer[];
   error: string | null;
   user: TAuthUserData | null;
@@ -26,6 +28,8 @@ const initialState: TInitialState = {
   fetchOffersStatus: RequestStatus.Idle,
   offer: null,
   fetchOfferStatus: RequestStatus.Idle,
+  nearPlaces: [],
+  fetchNearPlacesStatus: RequestStatus.Idle,
   offersFromCity: [],
   error: null,
   user: null,
@@ -55,6 +59,16 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOffer.rejected, (state) => {
       state.fetchOfferStatus = RequestStatus.Rejected;
+    })
+    .addCase(fetchNearPlaces.pending, (state) => {
+      state.fetchNearPlacesStatus = RequestStatus.Pending;
+    })
+    .addCase(fetchNearPlaces.fulfilled, (state, action) => {
+      state.fetchNearPlacesStatus = RequestStatus.Success;
+      state.nearPlaces = action.payload;
+    })
+    .addCase(fetchNearPlaces.rejected, (state) => {
+      state.fetchNearPlacesStatus = RequestStatus.Rejected;
     })
     .addCase(checkAuth.pending, (state) => {
       state.authorizationStatus = AuthorizationStatus.Unknown;

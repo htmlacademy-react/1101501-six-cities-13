@@ -29,6 +29,16 @@ export const fetchOffer = createAsyncThunk<
     }
   );
 
+export const fetchNearPlaces = createAsyncThunk<
+  TOffer[], TOfferFull['id'], {dispatch: TAppDispatch; state: TAppState; extra: AxiosInstance}
+  >(
+    `${NameSpace.Offer}/fetchNearPlaces`,
+    async (offerId, {extra: api}) => {
+      const {data} = await api.get<TOffer[]>(`${APIRoute.Offers}/${offerId}${APIRoute.Nearby}`);
+      return data;
+    }
+  );
+
 export const checkAuth = createAsyncThunk<
   TAuthUserData, undefined, {dispatch: TAppDispatch; state: TAppState; extra: AxiosInstance}
   >(
