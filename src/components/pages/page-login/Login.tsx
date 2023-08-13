@@ -62,7 +62,7 @@ function Login({ authStatus }: TLoginProps): JSX.Element {
     if (authStatus === AuthorizationStatus.Auth) {
       navigate('/');
     }
-  }, [authStatus]);
+  }, [authStatus, navigate]);
 
   return (
     <main className="page__main page__main--login">
