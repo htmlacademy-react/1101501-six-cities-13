@@ -1,11 +1,21 @@
 import {Link, Outlet} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../constants';
+import {useAppDispatch, useAppSelector} from '../hooks';
+import {logOut} from '../../store/api-actions';
+import {MouseEvent} from 'react';
 
 type TLayoutProps = {
   authStatus: AuthorizationStatus;
 }
 
 function Layout({ authStatus }: TLayoutProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const handleLogOutClick = (evt: MouseEvent<HTMLAnchorElement>): void => {
+    evt.preventDefault();
+    dispatch(logOut());
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -32,15 +42,15 @@ function Layout({ authStatus }: TLayoutProps): JSX.Element {
                     >
                       <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                       <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
+                        {user && user.email}
                       </span>
                       <span className="header__favorite-count">3</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                    <Link className="header__nav-link" onClick={handleLogOutClick}>
                       <span className="header__signout">Sign out</span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               ) : (

@@ -1,6 +1,15 @@
 // import offers from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
-import {checkAuth, fetchNearPlaces, fetchOffer, fetchOffers, fetchReviews, logIn, postReview} from './api-actions';
+import {
+  checkAuth,
+  fetchNearPlaces,
+  fetchOffer,
+  fetchOffers,
+  fetchReviews,
+  logIn,
+  logOut,
+  postReview
+} from './api-actions';
 import {TOffer} from '../types/offer';
 import {fetchError, setActiveCity} from './action';
 import {AuthorizationStatus, DEFAULT_LOCATION, RequestStatus} from '../constants';
@@ -99,7 +108,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(checkAuth.pending, (state) => {
       state.authorizationStatus = AuthorizationStatus.Unknown;
-      state.user = null;
     })
     .addCase(checkAuth.fulfilled, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.Auth;
@@ -119,6 +127,10 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(logIn.rejected, (state) => {
       state.loginStatus = RequestStatus.Rejected;
+    })
+    .addCase(logOut.fulfilled, (state) => {
+      state.user = null;
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
     })
     .addCase(setActiveCity, (state, action) => {
       state.city = action.payload;

@@ -13,6 +13,7 @@ export enum MapPageType {
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
+  Logout = '/logout',
   Nearby = '/nearby',
   Reviews = '/comments'
 }

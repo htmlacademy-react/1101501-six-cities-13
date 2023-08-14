@@ -4,7 +4,7 @@ import {fetchError} from './action';
 import {TOffer} from '../types/offer';
 import {TAuthData} from '../types/auth-data';
 import {TAuthUserData} from '../types/user-data';
-import {setToken} from '../services/token';
+import {removeToken, setToken} from '../services/token';
 import {TOfferFull} from '../types/offerFull';
 import {TReview, TReviewData} from '../types/review';
 import {AxiosInstance} from 'axios';
@@ -80,6 +80,16 @@ export const logIn = createAsyncThunk<
       setToken(data.token);
       return data;
     },
+  );
+
+export const logOut = createAsyncThunk<
+  void, undefined, TExtraArg
+  >(
+    `${NameSpace.User}/logout`,
+    async (_arg, {extra: api}) => {
+      await api.delete(APIRoute.Logout);
+      removeToken();
+    }
   );
 
 export const clearErrorAction = createAsyncThunk<
