@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import {OFFER_COMMENT_RATINGS} from '../../constants';
+import {OFFER_REVIEW_RATINGS} from '../../constants';
 
 type TChangeEvent = ChangeEvent<HTMLInputElement>
 
@@ -9,7 +9,7 @@ type TOfferRatingProps = {
 }
 
 function OfferRating({ initialValue, onRatingChange }: TOfferRatingProps): JSX.Element {
-  const ratings = [...OFFER_COMMENT_RATINGS].sort((a,b) => b.ratingValue - a.ratingValue);
+  const ratings = [...OFFER_REVIEW_RATINGS].sort((a, b) => b.ratingValue - a.ratingValue);
   const changeRatingHandler = (evt: TChangeEvent) => {
     const ratingValue = Number(evt.target.value);
     onRatingChange(ratingValue);

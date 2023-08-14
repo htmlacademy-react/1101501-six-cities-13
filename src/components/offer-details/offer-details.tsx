@@ -1,19 +1,19 @@
 import {TOfferFull} from '../../types/offerFull';
-import OfferCommentForm from '../offer-comment-form/OfferCommentForm';
+import OfferReviewForm from '../offer-review-form/OfferReviewForm';
 import {JSX} from 'react';
 import classNames from 'classnames';
 import {calculateRatingInWidthPercent} from '../../utils/utils';
-import reviews from '../../mocks/reviews';
 import OfferReviews from '../offer-reviews/offer-reviews';
+import {TReview} from '../../types/review';
 
 type TOfferDetailsProps = {
   offer: TOfferFull;
+  reviews: TReview[];
 }
 
-function OfferDetails({ offer }: TOfferDetailsProps): JSX.Element {
+function OfferDetails({ offer, reviews }: TOfferDetailsProps): JSX.Element {
   const {images, title, isPremium, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = offer;
   const {isPro, name, avatarUrl} = host;
-  const reviewsData = reviews;
 
   return (
     <>
@@ -115,11 +115,8 @@ function OfferDetails({ offer }: TOfferDetailsProps): JSX.Element {
             </div>
           </div>
           <section className="offer__reviews reviews">
-            <h2 className="reviews__title">
-              Reviews · <span className="reviews__amount">{reviewsData.length}</span>
-            </h2>
-            <OfferReviews reviews={reviewsData}/>
-            <OfferCommentForm />
+            <OfferReviews reviews={reviews}/>
+            <OfferReviewForm />
           </section>
         </div>
       </div>

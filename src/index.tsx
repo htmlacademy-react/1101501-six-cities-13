@@ -17,7 +17,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorMessage />
-      <App reviews={reviews}/>
+      <App />
     </Provider>
   </React.StrictMode>
 );

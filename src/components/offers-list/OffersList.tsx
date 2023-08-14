@@ -1,7 +1,7 @@
 import {TCity, TOffer} from '../../types/offer';
 import OfferCard from '../offer-card/OfferCard';
 import SortingForm from '../offer-sort-form/SortingForm';
-import {ClassNameForOfferCardType, SortingMap} from '../../constants';
+import {OfferCardPageType, SortingMap} from '../../constants';
 import {TSorting} from '../../types/sorting';
 import {useState} from 'react';
 import {sort} from '../../utils/sorting';
@@ -28,7 +28,7 @@ function OffersList({ offers, onOfferHover, selectedCity }: TOffersListProps): J
       }}
       />
       <div className="cities__places-list places__list tabs__content">
-        {sortOffers.map((offer) => <OfferCard cardType={ClassNameForOfferCardType.Cities} key={offer.id} offer={offer} targetOffer={onOfferHover}/>)}
+        {sortOffers.map((offer) => <OfferCard cardType={OfferCardPageType.Cities} key={offer.id} offer={offer} targetOffer={onOfferHover}/>)}
       </div>
     </section>
   );

@@ -1,21 +1,30 @@
 import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchNearPlaces, fetchOffer} from '../../../store/api-actions';
+import {fetchNearPlaces, fetchOffer, fetchReviews} from '../../../store/api-actions';
 import OfferDetails from '../../offer-details/offer-details';
-import {ClassNameForOfferCardType, MapPageType, MAX_NEAR_PLACES_COUNT, RequestStatus} from '../../../constants';
+import {
+  OfferCardPageType,
+  MapPageType,
+  MAX_NEAR_PLACES_COUNT,
+  RequestStatus
+} from '../../../constants';
 import Spinner from '../../loading/spinner';
 import Map from '../../map/Map';
 import {TOffer} from '../../../types/offer';
 import OfferCard from '../../offer-card/OfferCard';
+import PageNotFound from '../page-not-found/PageNotFound';
 
 function Offer(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id: offerId} = useParams();
   const offer = useAppSelector((state) => state.offer);
+  const reviews = useAppSelector((state) => state.reviews);
   const nearPlaces = useAppSelector((state) => state.nearPlaces);
   const offerFetchingStatus = useAppSelector((state) => state.fetchOfferStatus);
+  const reviewsFetchingStatus = useAppSelector((state) => state.fetchReviewsStatus);
   const nearPlacesFetchingStatus = useAppSelector((state) => state.fetchNearPlacesStatus);
+
   const limitedNearPlaces = (offers: TOffer[]): TOffer[] => {
     const limitedOffers = [];
     for (let i = 0; limitedOffers.length < MAX_NEAR_PLACES_COUNT; i++) {
@@ -35,18 +44,23 @@ function Offer(): JSX.Element {
     if (offerId) {
       dispatch(fetchOffer(offerId));
       dispatch(fetchNearPlaces(offerId));
+      dispatch(fetchReviews(offerId));
     }
   }, [offerId, dispatch]);
 
-  if (offerFetchingStatus === RequestStatus.Pending) {
+  if (
+    offerFetchingStatus === RequestStatus.Pending
+    || nearPlacesFetchingStatus === RequestStatus.Pending
+    || reviewsFetchingStatus === RequestStatus.Pending
+  ) {
     return (
       <Spinner />
     );
   }
 
-  if (nearPlacesFetchingStatus === RequestStatus.Pending) {
+  if (offerFetchingStatus === RequestStatus.Rejected) {
     return (
-      <Spinner />
+      <PageNotFound />
     );
   }
 
@@ -54,7 +68,7 @@ function Offer(): JSX.Element {
     return (
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferDetails offer={offer} />
+          <OfferDetails offer={offer} reviews={reviews} />
           <Map
             city={offer.city}
             targetOffer={offer}
@@ -70,7 +84,7 @@ function Offer(): JSX.Element {
               </h2>
               <div className="near-places__list places__list">
                 {nearPlacesToRender(nearPlaces).map((placeOffer) => (
-                  <OfferCard key={placeOffer.id} offer={placeOffer} cardType={ClassNameForOfferCardType.NearPlaces} />
+                  <OfferCard key={placeOffer.id} offer={placeOffer} cardType={OfferCardPageType.NearPlaces} />
                 ))}
               </div>
             </section>

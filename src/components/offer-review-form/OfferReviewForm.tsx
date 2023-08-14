@@ -1,27 +1,27 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
 import OfferRating from './OfferRating';
-import {OfferCommentLimit} from '../../constants';
+import {OfferReviewLimit} from '../../constants';
 
 type TChangeEvent = ChangeEvent<HTMLTextAreaElement>
 type TFormEvent = FormEvent<HTMLFormElement>
 
-type TOfferCommentFormData = {
+type TOfferReviewFormData = {
   rating: number;
   review: string;
 }
 
-function OfferCommentForm(): JSX.Element {
-  const [formData, setFormData] = useState<TOfferCommentFormData>({
+function OfferReviewForm(): JSX.Element {
+  const [formData, setFormData] = useState<TOfferReviewFormData>({
     rating: 0,
     review: ''
   });
 
-  const isValidForm = ((formData.rating >= OfferCommentLimit.MinRating)
-    && (OfferCommentLimit.CommentMaxLength >= formData.review.length)
-    && (OfferCommentLimit.CommentMinLength <= formData.review.length)
+  const isValidForm = ((formData.rating >= OfferReviewLimit.MinRating)
+    && (OfferReviewLimit.ReviewMaxLength >= formData.review.length)
+    && (OfferReviewLimit.ReviewMinLength <= formData.review.length)
   );
 
-  const handleCommentChange = (evt: TChangeEvent) => {
+  const handleReviewChange = (evt: TChangeEvent) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
   };
@@ -47,7 +47,7 @@ function OfferCommentForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.review}
-        onChange={handleCommentChange}
+        onChange={handleReviewChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -68,4 +68,4 @@ function OfferCommentForm(): JSX.Element {
   );
 }
 
-export default OfferCommentForm;
+export default OfferReviewForm;
