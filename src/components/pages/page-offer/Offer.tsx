@@ -1,7 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchNearPlaces, fetchOffer, fetchReviews} from '../../../store/api-actions';
+import {fetchNearPlaces, fetchOffer} from '../../../store/api-actions';
 import OfferDetails from '../../offer-details/offer-details';
 import {
   OfferCardPageType,
@@ -19,10 +19,9 @@ function Offer(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id: offerId} = useParams();
   const offer = useAppSelector((state) => state.offer);
-  const reviews = useAppSelector((state) => state.reviews);
   const nearPlaces = useAppSelector((state) => state.nearPlaces);
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
   const offerFetchingStatus = useAppSelector((state) => state.fetchOfferStatus);
-  const reviewsFetchingStatus = useAppSelector((state) => state.fetchReviewsStatus);
   const nearPlacesFetchingStatus = useAppSelector((state) => state.fetchNearPlacesStatus);
 
   const limitedNearPlaces = (offers: TOffer[]): TOffer[] => {
@@ -44,14 +43,12 @@ function Offer(): JSX.Element {
     if (offerId) {
       dispatch(fetchOffer(offerId));
       dispatch(fetchNearPlaces(offerId));
-      dispatch(fetchReviews(offerId));
     }
   }, [offerId, dispatch]);
 
   if (
     offerFetchingStatus === RequestStatus.Pending
     || nearPlacesFetchingStatus === RequestStatus.Pending
-    || reviewsFetchingStatus === RequestStatus.Pending
   ) {
     return (
       <Spinner />
@@ -68,7 +65,7 @@ function Offer(): JSX.Element {
     return (
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferDetails offer={offer} reviews={reviews} />
+          <OfferDetails offer={offer} authStatus={authStatus}/>
           <Map
             city={offer.city}
             targetOffer={offer}

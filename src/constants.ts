@@ -89,3 +89,4 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 export const DEFAULT_LOCATION = 'Paris';
 
 export const MAX_NEAR_PLACES_COUNT = 3;
+export const MAX_REVIEWS_COUNT = 10;

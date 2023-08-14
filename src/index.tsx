@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/App';
-import reviews from './mocks/reviews';
 import {Provider} from 'react-redux';
 import store from './store/store';
 import {checkAuth} from './store/api-actions';

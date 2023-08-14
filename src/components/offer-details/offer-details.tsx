@@ -4,15 +4,17 @@ import {JSX} from 'react';
 import classNames from 'classnames';
 import {calculateRatingInWidthPercent} from '../../utils/utils';
 import OfferReviews from '../offer-reviews/offer-reviews';
-import {TReview} from '../../types/review';
+import {AuthorizationStatus} from '../../constants';
 
 type TOfferDetailsProps = {
   offer: TOfferFull;
-  reviews: TReview[];
+  authStatus: AuthorizationStatus;
 }
 
-function OfferDetails({ offer, reviews }: TOfferDetailsProps): JSX.Element {
-  const {images, title, isPremium, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = offer;
+function OfferDetails({ offer, authStatus }: TOfferDetailsProps): JSX.Element {
+  const {
+    images, title, isPremium, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description, id
+  } = offer;
   const {isPro, name, avatarUrl} = host;
 
   return (
@@ -115,8 +117,10 @@ function OfferDetails({ offer, reviews }: TOfferDetailsProps): JSX.Element {
             </div>
           </div>
           <section className="offer__reviews reviews">
-            <OfferReviews reviews={reviews}/>
-            <OfferReviewForm />
+            <OfferReviews offerId={id} />
+            {authStatus === AuthorizationStatus.Auth && (
+              <OfferReviewForm offerId={id} />
+            )}
           </section>
         </div>
       </div>

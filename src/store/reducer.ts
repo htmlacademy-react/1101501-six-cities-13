@@ -1,6 +1,6 @@
 // import offers from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
-import {checkAuth, fetchNearPlaces, fetchOffer, fetchOffers, fetchReviews, logIn} from './api-actions';
+import {checkAuth, fetchNearPlaces, fetchOffer, fetchOffers, fetchReviews, logIn, postReview} from './api-actions';
 import {TOffer} from '../types/offer';
 import {fetchError, setActiveCity} from './action';
 import {AuthorizationStatus, DEFAULT_LOCATION, RequestStatus} from '../constants';
@@ -16,6 +16,7 @@ type TInitialState = {
   fetchOfferStatus: RequestStatus;
   reviews: TReview[];
   fetchReviewsStatus: RequestStatus;
+  postReviewStatus: RequestStatus;
   nearPlaces: TOffer[];
   fetchNearPlacesStatus: RequestStatus;
   offersFromCity: TOffer[];
@@ -33,6 +34,7 @@ const initialState: TInitialState = {
   fetchOfferStatus: RequestStatus.Idle,
   reviews: [],
   fetchReviewsStatus: RequestStatus.Idle,
+  postReviewStatus: RequestStatus.Idle,
   nearPlaces: [],
   fetchNearPlacesStatus: RequestStatus.Idle,
   offersFromCity: [],
@@ -83,6 +85,16 @@ const reducer = createReducer(initialState, (builder) => {
       state.reviews = action.payload;
     })
     .addCase(fetchReviews.rejected, (state) => {
+      state.fetchReviewsStatus = RequestStatus.Rejected;
+    })
+    .addCase(postReview.pending, (state) => {
+      state.fetchReviewsStatus = RequestStatus.Pending;
+    })
+    .addCase(postReview.fulfilled, (state, action) => {
+      state.fetchReviewsStatus = RequestStatus.Success;
+      state.reviews = [action.payload, ...state.reviews];
+    })
+    .addCase(postReview.rejected, (state) => {
       state.fetchReviewsStatus = RequestStatus.Rejected;
     })
     .addCase(checkAuth.pending, (state) => {
