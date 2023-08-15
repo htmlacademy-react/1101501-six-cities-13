@@ -1,19 +1,21 @@
 import {TOfferFull} from '../../types/offerFull';
-import OfferCommentForm from '../offer-comment-form/OfferCommentForm';
+import OfferReviewForm from '../offer-review-form/OfferReviewForm';
 import {JSX} from 'react';
 import classNames from 'classnames';
 import {calculateRatingInWidthPercent} from '../../utils/utils';
-import reviews from '../../mocks/reviews';
 import OfferReviews from '../offer-reviews/offer-reviews';
+import {AuthorizationStatus} from '../../constants';
 
 type TOfferDetailsProps = {
   offer: TOfferFull;
+  authStatus: AuthorizationStatus;
 }
 
-function OfferDetails({ offer }: TOfferDetailsProps): JSX.Element {
-  const {images, title, isPremium, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description} = offer;
+function OfferDetails({ offer, authStatus }: TOfferDetailsProps): JSX.Element {
+  const {
+    images, title, isPremium, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description, id
+  } = offer;
   const {isPro, name, avatarUrl} = host;
-  const reviewsData = reviews;
 
   return (
     <>
@@ -115,11 +117,10 @@ function OfferDetails({ offer }: TOfferDetailsProps): JSX.Element {
             </div>
           </div>
           <section className="offer__reviews reviews">
-            <h2 className="reviews__title">
-              Reviews · <span className="reviews__amount">{reviewsData.length}</span>
-            </h2>
-            <OfferReviews reviews={reviewsData}/>
-            <OfferCommentForm />
+            <OfferReviews offerId={id} />
+            {authStatus === AuthorizationStatus.Auth && (
+              <OfferReviewForm offerId={id} />
+            )}
           </section>
         </div>
       </div>

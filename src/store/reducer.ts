@@ -1,11 +1,21 @@
 // import offers from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
-import {checkAuth, fetchNearPlaces, fetchOffer, fetchOffers, logIn} from './api-actions';
+import {
+  checkAuth,
+  fetchNearPlaces,
+  fetchOffer,
+  fetchOffers,
+  fetchReviews,
+  logIn,
+  logOut,
+  postReview
+} from './api-actions';
 import {TOffer} from '../types/offer';
 import {fetchError, setActiveCity} from './action';
 import {AuthorizationStatus, DEFAULT_LOCATION, RequestStatus} from '../constants';
 import {TAuthUserData} from '../types/user-data';
 import {TOfferFull} from '../types/offerFull';
+import {TReview} from '../types/review';
 
 type TInitialState = {
   city: string;
@@ -13,6 +23,9 @@ type TInitialState = {
   fetchOffersStatus: RequestStatus;
   offer: TOfferFull | null;
   fetchOfferStatus: RequestStatus;
+  reviews: TReview[];
+  fetchReviewsStatus: RequestStatus;
+  postReviewStatus: RequestStatus;
   nearPlaces: TOffer[];
   fetchNearPlacesStatus: RequestStatus;
   offersFromCity: TOffer[];
@@ -28,6 +41,9 @@ const initialState: TInitialState = {
   fetchOffersStatus: RequestStatus.Idle,
   offer: null,
   fetchOfferStatus: RequestStatus.Idle,
+  reviews: [],
+  fetchReviewsStatus: RequestStatus.Idle,
+  postReviewStatus: RequestStatus.Idle,
   nearPlaces: [],
   fetchNearPlacesStatus: RequestStatus.Idle,
   offersFromCity: [],
@@ -70,9 +86,28 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(fetchNearPlaces.rejected, (state) => {
       state.fetchNearPlacesStatus = RequestStatus.Rejected;
     })
+    .addCase(fetchReviews.pending, (state) => {
+      state.fetchReviewsStatus = RequestStatus.Pending;
+    })
+    .addCase(fetchReviews.fulfilled, (state, action) => {
+      state.fetchReviewsStatus = RequestStatus.Success;
+      state.reviews = action.payload;
+    })
+    .addCase(fetchReviews.rejected, (state) => {
+      state.fetchReviewsStatus = RequestStatus.Rejected;
+    })
+    .addCase(postReview.pending, (state) => {
+      state.fetchReviewsStatus = RequestStatus.Pending;
+    })
+    .addCase(postReview.fulfilled, (state, action) => {
+      state.fetchReviewsStatus = RequestStatus.Success;
+      state.reviews = [action.payload, ...state.reviews];
+    })
+    .addCase(postReview.rejected, (state) => {
+      state.fetchReviewsStatus = RequestStatus.Rejected;
+    })
     .addCase(checkAuth.pending, (state) => {
       state.authorizationStatus = AuthorizationStatus.Unknown;
-      state.user = null;
     })
     .addCase(checkAuth.fulfilled, (state, action) => {
       state.authorizationStatus = AuthorizationStatus.Auth;
@@ -92,6 +127,10 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(logIn.rejected, (state) => {
       state.loginStatus = RequestStatus.Rejected;
+    })
+    .addCase(logOut.fulfilled, (state) => {
+      state.user = null;
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
     })
     .addCase(setActiveCity, (state, action) => {
       state.city = action.payload;

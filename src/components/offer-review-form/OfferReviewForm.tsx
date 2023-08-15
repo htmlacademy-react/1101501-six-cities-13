@@ -1,38 +1,43 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
 import OfferRating from './OfferRating';
-import {OfferCommentLimit} from '../../constants';
+import {OfferReviewLimit} from '../../constants';
+import {TReviewData} from '../../types/review';
+import {TOfferFull} from '../../types/offerFull';
+import {postReview} from '../../store/api-actions';
+import {useAppDispatch} from '../hooks';
 
 type TChangeEvent = ChangeEvent<HTMLTextAreaElement>
 type TFormEvent = FormEvent<HTMLFormElement>
 
-type TOfferCommentFormData = {
-  rating: number;
-  review: string;
+type TOfferReviewFormProps = {
+  offerId: TOfferFull['id'];
 }
 
-function OfferCommentForm(): JSX.Element {
-  const [formData, setFormData] = useState<TOfferCommentFormData>({
+function OfferReviewForm({ offerId }: TOfferReviewFormProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const [reviewData, setReviewData] = useState<TReviewData>({
     rating: 0,
-    review: ''
+    comment: ''
   });
 
-  const isValidForm = ((formData.rating >= OfferCommentLimit.MinRating)
-    && (OfferCommentLimit.CommentMaxLength >= formData.review.length)
-    && (OfferCommentLimit.CommentMinLength <= formData.review.length)
+  const isValidForm = ((reviewData.rating >= OfferReviewLimit.MinRating)
+    && (OfferReviewLimit.ReviewMaxLength >= reviewData.comment.length)
+    && (OfferReviewLimit.ReviewMinLength <= reviewData.comment.length)
   );
 
-  const handleCommentChange = (evt: TChangeEvent) => {
-    const {name, value} = evt.target;
-    setFormData({...formData, [name]: value});
+  const handleReviewChange = (evt: TChangeEvent) => {
+    const {value} = evt.target;
+    setReviewData({...reviewData, comment: value});
   };
 
   const handleRatingChange = (rating: number) => {
-    setFormData({...formData, rating});
+    setReviewData({...reviewData, rating});
   };
 
   const submitFormHandler = (evt: TFormEvent) => {
     evt.preventDefault();
-    setFormData({...formData, rating: 0, review: ''});
+    dispatch(postReview({offerId:offerId, reviewData}));
+    setReviewData({...reviewData, rating: 0, comment: ''});
   };
 
   return (
@@ -40,14 +45,14 @@ function OfferCommentForm(): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <OfferRating initialValue={formData.rating} onRatingChange={handleRatingChange} />
+      <OfferRating initialValue={reviewData.rating} onRatingChange={handleRatingChange} />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={formData.review}
-        onChange={handleCommentChange}
+        value={reviewData.comment}
+        onChange={handleReviewChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -68,4 +73,4 @@ function OfferCommentForm(): JSX.Element {
   );
 }
 
-export default OfferCommentForm;
+export default OfferReviewForm;

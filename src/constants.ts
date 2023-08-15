@@ -13,7 +13,9 @@ export enum MapPageType {
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
-  Nearby = '/nearby'
+  Logout = '/logout',
+  Nearby = '/nearby',
+  Reviews = '/comments'
 }
 
 export enum NameSpace {
@@ -36,19 +38,19 @@ export enum RequestStatus {
   Rejected = 'Rejected',
 }
 
-export enum ClassNameForOfferCardType {
+export enum OfferCardPageType {
   Cities = 'cities',
   Favorites = 'favorites',
   NearPlaces = 'near-places'
 }
 
-export enum OfferCommentLimit {
-  CommentMinLength = 50,
-  CommentMaxLength = 300,
+export enum OfferReviewLimit {
+  ReviewMinLength = 50,
+  ReviewMaxLength = 300,
   MinRating = 1,
 }
 
-export const OFFER_COMMENT_RATINGS = [
+export const OFFER_REVIEW_RATINGS = [
   { ratingValue: 1, ratingText: 'terribly' },
   { ratingValue: 2, ratingText: 'badly' },
   { ratingValue: 3, ratingText: 'not bad' },
@@ -88,3 +90,4 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 export const DEFAULT_LOCATION = 'Paris';
 
 export const MAX_NEAR_PLACES_COUNT = 3;
+export const MAX_REVIEWS_COUNT = 10;

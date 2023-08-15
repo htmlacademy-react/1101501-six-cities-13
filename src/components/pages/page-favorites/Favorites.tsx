@@ -1,5 +1,5 @@
 import OfferCard from '../../offer-card/OfferCard';
-import {ClassNameForOfferCardType} from '../../../constants';
+import {OfferCardPageType} from '../../../constants';
 import {useAppSelector} from '../../hooks';
 
 function Favorites(): JSX.Element {
@@ -29,7 +29,7 @@ function Favorites(): JSX.Element {
                       if (city !== cityName) {
                         return null;
                       }
-                      return <OfferCard key={offer.id} offer={offer} cardType={ClassNameForOfferCardType.Favorites}/>;
+                      return <OfferCard key={offer.id} offer={offer} cardType={OfferCardPageType.Favorites}/>;
                     })}
                   </div>
                 </li>
