@@ -5,6 +5,7 @@ import CitiesList from '../../cities-list/CitiesList';
 import Cities from '../../cities/Cities';
 import {RequestStatus} from '../../../constants';
 import Spinner from '../../loading/spinner';
+import {Helmet} from 'react-helmet-async';
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -25,6 +26,9 @@ function Main(): JSX.Element {
 
   return (
     <main className="page__main page__main--index">
+      <Helmet>
+        <title>Six cities - Cities</title>
+      </Helmet>
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">

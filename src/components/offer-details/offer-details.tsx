@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import {calculateRatingInWidthPercent} from '../../utils/utils';
 import OfferReviews from '../offer-reviews/offer-reviews';
 import {AuthorizationStatus} from '../../constants';
+import {Helmet} from 'react-helmet-async';
 
 type TOfferDetailsProps = {
   offer: TOfferFull;
@@ -20,6 +21,9 @@ function OfferDetails({ offer, authStatus }: TOfferDetailsProps): JSX.Element {
   return (
     <>
       <div className="offer__gallery-container container">
+        <Helmet>
+          <title>Six cities - {offer.title}</title>
+        </Helmet>
         <div className="offer__gallery">
           {images.map((imageUrl) => (
             <div key={imageUrl} className="offer__image-wrapper">

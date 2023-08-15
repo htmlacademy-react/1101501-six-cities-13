@@ -1,6 +1,7 @@
 import OfferCard from '../../offer-card/OfferCard';
 import {OfferCardPageType} from '../../../constants';
 import {useAppSelector} from '../../hooks';
+import {Helmet} from 'react-helmet-async';
 
 function Favorites(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
@@ -10,6 +11,9 @@ function Favorites(): JSX.Element {
   return (
     <>
       <main className="page__main page__main--favorites">
+        <Helmet>
+          <title>Six cities - Saved listing</title>
+        </Helmet>
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>

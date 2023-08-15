@@ -9,6 +9,7 @@ import PrivateRoute from '../private-route/PrivateRoute';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../hooks';
 import Spinner from '../loading/spinner';
+import {HelmetProvider} from 'react-helmet-async';
 
 function App(): JSX.Element {
   const authStatus = useAppSelector((state) => state.authorizationStatus);
@@ -20,26 +21,28 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Root} element={<Layout authStatus={authStatus} />}>
-          <Route index element={<Main />} />
-          <Route path={AppRoute.Login} element={<Login authStatus={authStatus} />} />
-          <Route path={AppRoute.Offer}>
-            <Route path=':id' element={<Offer />} />
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path={AppRoute.Root} element={<Layout authStatus={authStatus} />}>
+            <Route index element={<Main />} />
+            <Route path={AppRoute.Login} element={<Login authStatus={authStatus} />} />
+            <Route path={AppRoute.Offer}>
+              <Route path=':id' element={<Offer />} />
+            </Route>
+            <Route
+              path={AppRoute.Favorites}
+              element={
+                <PrivateRoute authStatus={authStatus}>
+                  <Favorites />
+                </PrivateRoute>
+              }
+            />
           </Route>
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute authStatus={authStatus}>
-                <Favorites />
-              </PrivateRoute>
-            }
-          />
-        </Route>
-        <Route path="*" element={<PageNotFound />}></Route>
-      </Routes>
-    </BrowserRouter>
+          <Route path="*" element={<PageNotFound />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

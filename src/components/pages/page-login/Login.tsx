@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {TAuthData} from '../../../types/auth-data';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {logIn} from '../../../store/api-actions';
+import {Helmet} from 'react-helmet-async';
 
 type TChangeEvent = ChangeEvent<HTMLInputElement>
 type TSubmitEvent = FormEvent
@@ -66,6 +67,9 @@ function Login({ authStatus }: TLoginProps): JSX.Element {
 
   return (
     <main className="page__main page__main--login">
+      <Helmet>
+        <title>Six cities - Sign in</title>
+      </Helmet>
       <div className="page__login-container container">
         <section className="login">
           <h1 className="login__title">Sign in</h1>
