@@ -52,9 +52,7 @@ function Login({ authStatus }: TLoginProps): JSX.Element {
     }
     if (!PASSWORD_REGEX.test(formData.password)) {
       setErrorMessage(PASSWORD_INVALID_MESSAGE);
-
     }
-
     dispatch(logIn(formData));
 
   };

@@ -35,7 +35,7 @@ function Main(): JSX.Element {
           {offersFromCity.length && <CitiesList selectedCity={activeCity}/>}
         </section>
       </div>
-      {offersFromCity.length && <Cities city={activeCity} offers={offersFromCity} />}
+      {Boolean(offersFromCity.length) && <Cities city={activeCity} offers={offersFromCity} />}
     </main>
   );
 }

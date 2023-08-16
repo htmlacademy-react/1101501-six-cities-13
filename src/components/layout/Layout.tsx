@@ -1,8 +1,9 @@
-import {Link, Outlet} from 'react-router-dom';
+import {Link, Outlet, useLocation} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import {logOut} from '../../store/api-actions';
 import {MouseEvent} from 'react';
+import classNames from 'classnames';
 
 type TLayoutProps = {
   authStatus: AuthorizationStatus;
@@ -11,18 +12,31 @@ type TLayoutProps = {
 function Layout({ authStatus }: TLayoutProps): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+  const {pathname} = useLocation();
+
   const handleLogOutClick = (evt: MouseEvent<HTMLAnchorElement>): void => {
     evt.preventDefault();
     dispatch(logOut());
   };
 
   return (
-    <div className="page page--gray page--main">
+    <div className={classNames({
+      'page': true,
+      'page--gray': pathname.includes(AppRoute.Login) || pathname === AppRoute.Root || pathname.includes('main-empty'),
+      'page--login': pathname.includes(AppRoute.Login),
+      'page--main': pathname === AppRoute.Root || pathname.includes('main-empty'),
+      'page--favorites-empty': pathname.includes('favorites-empty')
+    })}
+    >
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link to="/" className="header__logo-link header__logo-link--active">
+              <Link to={AppRoute.Root} className={classNames({
+                'header__logo-link--active': pathname === AppRoute.Root,
+                'header__logo-link': true
+              })}
+              >
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -54,6 +68,8 @@ function Layout({ authStatus }: TLayoutProps): JSX.Element {
                   </li>
                 </ul>
               ) : (
+                !pathname.includes(AppRoute.Login)
+                &&
                 <ul className="header__nav-list">
                   <li className="header__nav-item">
                     <Link className="header__nav-link" to={AppRoute.Login}>
