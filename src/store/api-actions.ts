@@ -1,6 +1,6 @@
-import {APIRoute, NameSpace, TIMEOUT_SHOW_ERROR} from '../constants';
+import {APIRoute, AppRoute, NameSpace, TIMEOUT_SHOW_ERROR} from '../constants';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {fetchError} from './action';
+import {fetchError, redirectToRoute} from './action';
 import {TFavoriteData, TOffer} from '../types/offer';
 import {TAuthData} from '../types/auth-data';
 import {TAuthUserData} from '../types/user-data';
@@ -8,6 +8,7 @@ import {removeToken, setToken} from '../services/token';
 import {TOfferFull} from '../types/offerFull';
 import {TReview, TReviewData} from '../types/review';
 import {AxiosInstance} from 'axios';
+import {TAppDispatch} from '../types/state';
 
 type TExtraArg = {extra: AxiosInstance};
 
@@ -92,12 +93,13 @@ export const checkAuth = createAsyncThunk<
   );
 
 export const logIn = createAsyncThunk<
-  TAuthUserData, TAuthData, TExtraArg
+  TAuthUserData, TAuthData, TExtraArg & {dispatch: TAppDispatch}
   >(
     `${NameSpace.User}/login`,
-    async ({email, password}, {extra: api}) => {
+    async ({email, password}, {dispatch, extra: api}) => {
       const {data} = await api.post<TAuthUserData>(APIRoute.Login, {email, password});
       setToken(data.token);
+      dispatch(redirectToRoute(AppRoute.Root));
       return data;
     },
   );

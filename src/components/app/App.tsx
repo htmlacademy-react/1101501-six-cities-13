@@ -10,6 +10,8 @@ import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../hooks';
 import Spinner from '../loading/spinner';
 import {HelmetProvider} from 'react-helmet-async';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   const authStatus = useAppSelector((state) => state.authorizationStatus);
@@ -22,7 +24,7 @@ function App(): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path={AppRoute.Root} element={<Layout authStatus={authStatus} />}>
             <Route index element={<Main />} />
@@ -41,7 +43,7 @@ function App(): JSX.Element {
           </Route>
           <Route path="*" element={<PageNotFound />}></Route>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
