@@ -1,6 +1,6 @@
 import OffersList from '../offers-list/OffersList';
 import Map from '../map/Map';
-import {useState} from 'react';
+import {memo, useCallback, useState} from 'react';
 import {TCity, TOffer} from '../../types/offer';
 import {MapPageType} from '../../constants';
 
@@ -11,11 +11,11 @@ type TCities = {
 
 export function Cities({ city, offers }: TCities): JSX.Element {
   const cityInfo = offers.find((cityData) => cityData?.city.name === city)?.city;
-  const [activeOffer, setActiveOffer] = useState<TOffer | undefined>(undefined);
+  const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
 
-  const handleCardHover = (offer: TOffer) => {
+  const handleCardHover = useCallback((offer: TOffer) => {
     setActiveOffer(offer);
-  };
+  }, []);
 
   return (
     <div className="cities">
@@ -29,4 +29,4 @@ export function Cities({ city, offers }: TCities): JSX.Element {
   );
 }
 
-export default Cities;
+export default memo(Cities);

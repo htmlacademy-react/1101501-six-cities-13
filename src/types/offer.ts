@@ -21,3 +21,11 @@ export type TOffer = {
   rating: number;
   previewImage: string;
 }
+
+export type TFavoriteData = {
+  id: TOffer['id'];
+} & TFavoriteDataStatus;
+
+export type TFavoriteDataStatus = {
+  status: 0 | 1;
+}

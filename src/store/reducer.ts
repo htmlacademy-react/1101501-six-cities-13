@@ -1,7 +1,8 @@
 // import offers from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
 import {
-  checkAuth,
+  changeFavorite,
+  checkAuth, fetchFavorites,
   fetchNearPlaces,
   fetchOffer,
   fetchOffers,
@@ -26,6 +27,8 @@ type TInitialState = {
   reviews: TReview[];
   fetchReviewsStatus: RequestStatus;
   postReviewStatus: RequestStatus;
+  favoriteOffers: TOffer[];
+  fetchFavoriteOffersStatus: RequestStatus;
   nearPlaces: TOffer[];
   fetchNearPlacesStatus: RequestStatus;
   offersFromCity: TOffer[];
@@ -44,6 +47,8 @@ const initialState: TInitialState = {
   reviews: [],
   fetchReviewsStatus: RequestStatus.Idle,
   postReviewStatus: RequestStatus.Idle,
+  favoriteOffers: [],
+  fetchFavoriteOffersStatus: RequestStatus.Idle,
   nearPlaces: [],
   fetchNearPlacesStatus: RequestStatus.Idle,
   offersFromCity: [],
@@ -102,6 +107,25 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(postReview.fulfilled, (state, action) => {
       state.fetchReviewsStatus = RequestStatus.Success;
       state.reviews = [action.payload, ...state.reviews];
+    })
+    .addCase(fetchFavorites.pending, (state) => {
+      state.fetchFavoriteOffersStatus = RequestStatus.Pending;
+    })
+    .addCase(fetchFavorites.fulfilled, (state, action) => {
+      state.fetchFavoriteOffersStatus = RequestStatus.Success;
+      state.favoriteOffers = action.payload;
+    })
+    .addCase(fetchFavorites.rejected, (state) => {
+      state.fetchFavoriteOffersStatus = RequestStatus.Rejected;
+    })
+    .addCase(changeFavorite.fulfilled, (state, action) => {
+      const updatedOffer = action.payload;
+      if (!state.favoriteOffers.some((offer) => offer.id === updatedOffer.id)) {
+        state.favoriteOffers.push(updatedOffer);
+      } else {
+        state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== updatedOffer.id);
+      }
+
     })
     .addCase(postReview.rejected, (state) => {
       state.fetchReviewsStatus = RequestStatus.Rejected;

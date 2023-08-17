@@ -1,7 +1,7 @@
 import {APIRoute, NameSpace, TIMEOUT_SHOW_ERROR} from '../constants';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {fetchError} from './action';
-import {TOffer} from '../types/offer';
+import {TFavoriteData, TOffer} from '../types/offer';
 import {TAuthData} from '../types/auth-data';
 import {TAuthUserData} from '../types/user-data';
 import {removeToken, setToken} from '../services/token';
@@ -57,6 +57,26 @@ export const postReview = createAsyncThunk<
     `${NameSpace.Offer}/postOfferReview`,
     async ({reviewData, offerId}, {extra: api}) => {
       const {data} = await api.post<TReview[]>(`${APIRoute.Reviews}/${offerId}`, reviewData);
+      return data;
+    }
+  );
+
+export const fetchFavorites = createAsyncThunk<
+  TOffer[], undefined, TExtraArg
+  >(
+    `${NameSpace.Offer}/fetchFavorites`,
+    async (_arg, {extra: api}) => {
+      const {data} = await api.get<TOffer[]>(`${APIRoute.Favorite}`);
+      return data;
+    }
+  );
+
+export const changeFavorite = createAsyncThunk<
+  TOffer, TFavoriteData, TExtraArg
+  >(
+    `${NameSpace.Offer}/addFavorite`,
+    async ({id, status}, {extra: api}) => {
+      const {data} = await api.post<TOffer[]>(`${APIRoute.Favorite}/${id}/${status}`);
       return data;
     }
   );

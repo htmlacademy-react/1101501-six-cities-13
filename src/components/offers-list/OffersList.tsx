@@ -3,7 +3,7 @@ import OfferCard from '../offer-card/OfferCard';
 import SortingForm from '../offer-sort-form/SortingForm';
 import {OfferCardPageType, SortingMap} from '../../constants';
 import {TSorting} from '../../types/sorting';
-import {useState} from 'react';
+import {memo, useState} from 'react';
 import {sort} from '../../utils/sorting';
 
 type TOffersListProps = {
@@ -34,4 +34,4 @@ function OffersList({ offers, onOfferHover, selectedCity }: TOffersListProps): J
   );
 }
 
-export default OffersList;
+export default memo(OffersList);

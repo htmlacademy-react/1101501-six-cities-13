@@ -1,11 +1,14 @@
 import {TOfferFull} from '../../types/offerFull';
 import OfferReviewForm from '../offer-review-form/OfferReviewForm';
-import {JSX} from 'react';
+import {JSX, useState} from 'react';
 import classNames from 'classnames';
 import {calculateRatingInWidthPercent} from '../../utils/utils';
 import OfferReviews from '../offer-reviews/offer-reviews';
 import {AuthorizationStatus} from '../../constants';
 import {Helmet} from 'react-helmet-async';
+import {TFavoriteDataStatus} from '../../types/offer';
+import {changeFavorite} from '../../store/api-actions';
+import {useAppDispatch} from '../hooks';
 
 type TOfferDetailsProps = {
   offer: TOfferFull;
@@ -17,6 +20,15 @@ function OfferDetails({ offer, authStatus }: TOfferDetailsProps): JSX.Element {
     images, title, isPremium, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description, id
   } = offer;
   const {isPro, name, avatarUrl} = host;
+
+  const dispatch = useAppDispatch();
+  const [isFavoriteOffer, setIsFavoriteOffer] = useState<boolean>(isFavorite);
+
+  const handleFavoriteOfferClick = () => {
+    const changedFavoriteStatus = Number(!isFavoriteOffer) as TFavoriteDataStatus['status'];
+    setIsFavoriteOffer(!isFavoriteOffer);
+    dispatch(changeFavorite({id, status: changedFavoriteStatus}));
+  };
 
   return (
     <>
@@ -53,10 +65,11 @@ function OfferDetails({ offer, authStatus }: TOfferDetailsProps): JSX.Element {
                 {
                   'offer__bookmark-button': true,
                   'button': true,
-                  'offer__bookmark-button--active': isFavorite,
+                  'offer__bookmark-button--active': isFavoriteOffer,
                 }
               )}
               type="button"
+              onClick={handleFavoriteOfferClick}
             >
               <svg className="offer__bookmark-icon" width={31} height={33}>
                 <use xlinkHref="#icon-bookmark" />

@@ -1,7 +1,10 @@
-import {TOffer} from '../../types/offer';
+import {TFavoriteDataStatus, TOffer} from '../../types/offer';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../constants';
+import {useAppDispatch} from '../hooks';
+import {changeFavorite} from '../../store/api-actions';
+import {calculateRatingInWidthPercent} from '../../utils/utils';
 
 type TOfferCardProps = {
   offer: TOffer;
@@ -10,14 +13,21 @@ type TOfferCardProps = {
 }
 
 function OfferCard({ offer, cardType, targetOffer }: TOfferCardProps): JSX.Element {
-  const {isPremium, isFavorite, previewImage, title, type, rating, price} = offer;
+  const dispatch = useAppDispatch();
+  const {isPremium, isFavorite, previewImage, title, type, rating, price, id} = offer;
   const [isFavoriteOffer, setIsFavoriteOffer] = useState<boolean>(isFavorite);
+
   const handleFavoriteOfferClick = () => {
+    const changedFavoriteStatus = Number(!isFavoriteOffer) as TFavoriteDataStatus['status'];
     setIsFavoriteOffer(!isFavoriteOffer);
+    dispatch(changeFavorite({id, status: changedFavoriteStatus}));
   };
 
   return (
-    <article className={`${cardType}__card place-card`} onMouseOver={() => targetOffer && targetOffer(offer)}>
+    <article className={`${cardType}__card place-card`}
+      onMouseOver={() => targetOffer?.(offer)}
+      onMouseOut={() => targetOffer?.(null)}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -52,7 +62,7 @@ function OfferCard({ offer, cardType, targetOffer }: TOfferCardProps): JSX.Eleme
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(rating * 100) / 5}%`}}/>
+            <span style={{width: calculateRatingInWidthPercent(rating)}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
