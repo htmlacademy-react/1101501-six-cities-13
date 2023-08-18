@@ -1,12 +1,19 @@
 import OfferCard from '../../offer-card/OfferCard';
-import {OfferCardPageType} from '../../../constants';
-import {useAppSelector} from '../../hooks';
+import {AppRoute, OfferCardPageType} from '../../../constants';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Helmet} from 'react-helmet-async';
+import {Link} from 'react-router-dom';
+import {setActiveCity} from '../../../store/action';
+import {TCity} from '../../../types/offer';
 
 function Favorites(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const favoriteOffers = offers.filter((offer) => !!offer.isFavorite);
+  const dispatch = useAppDispatch();
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   const cities:string[] = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
+
+  const handleChangeCity = (city: TCity['name']) => {
+    dispatch(setActiveCity(city));
+  };
 
   return (
     <>
@@ -22,9 +29,13 @@ function Favorites(): JSX.Element {
                 <li key={city} className="favorites__locations-items">
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
-                      <a className="locations__item-link" href="#">
+                      <Link
+                        className="locations__item-link"
+                        to={AppRoute.Root}
+                        onClick={() => handleChangeCity(city)}
+                      >
                         <span>{city}</span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="favorites__places">
@@ -43,8 +54,7 @@ function Favorites(): JSX.Element {
         </div>
       </main>
       <footer className="footer container">
-        {/* link to main */}
-        <a className="footer__logo-link" href="#">
+        <Link to={AppRoute.Root} className="footer__logo-link">
           <img
             className="footer__logo"
             src="img/logo.svg"
@@ -52,8 +62,7 @@ function Favorites(): JSX.Element {
             width={64}
             height={33}
           />
-        </a>
-        {/* link to main */}
+        </Link>
       </footer>
     </>
   );

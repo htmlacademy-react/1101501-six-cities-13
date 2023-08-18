@@ -1,8 +1,8 @@
 import {Link, Outlet, useLocation} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../hooks';
-import {logOut} from '../../store/api-actions';
-import {MouseEvent} from 'react';
+import {fetchFavorites, logOut} from '../../store/api-actions';
+import {MouseEvent, useEffect} from 'react';
 import classNames from 'classnames';
 
 type TLayoutProps = {
@@ -12,6 +12,7 @@ type TLayoutProps = {
 function Layout({ authStatus }: TLayoutProps): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
   const {pathname} = useLocation();
 
   const handleLogOutClick = (evt: MouseEvent<HTMLAnchorElement>): void => {
@@ -19,12 +20,16 @@ function Layout({ authStatus }: TLayoutProps): JSX.Element {
     dispatch(logOut());
   };
 
+  useEffect(() => {
+    dispatch(fetchFavorites());
+  }, [dispatch]);
+
   return (
     <div className={classNames({
       'page': true,
-      'page--gray': pathname.includes(AppRoute.Login) || pathname === AppRoute.Root || pathname.includes('main-empty'),
+      'page--gray': pathname.includes(AppRoute.Login) || pathname === AppRoute.Root,
       'page--login': pathname.includes(AppRoute.Login),
-      'page--main': pathname === AppRoute.Root || pathname.includes('main-empty'),
+      'page--main': pathname === AppRoute.Root,
       'page--favorites-empty': pathname.includes('favorites-empty')
     })}
     >
@@ -58,7 +63,7 @@ function Layout({ authStatus }: TLayoutProps): JSX.Element {
                       <span className="header__user-name user__name">
                         {user?.email ?? ''}
                       </span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favoriteOffers.length}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">

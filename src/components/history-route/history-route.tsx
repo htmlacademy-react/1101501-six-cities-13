@@ -1,5 +1,5 @@
 import {ReactNode, useLayoutEffect, useState} from 'react';
-import {NavigationType, Router} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import {BrowserHistory} from 'history';
 
 export type HistoryRouterProps = {
