@@ -5,6 +5,7 @@ import {TReviewData} from '../../types/review';
 import {TOfferFull} from '../../types/offerFull';
 import {postReview} from '../../store/api-actions';
 import {useAppDispatch} from '../hooks';
+import styles from './offer-review-form.module.css';
 
 type TChangeEvent = ChangeEvent<HTMLTextAreaElement>
 type TFormEvent = FormEvent<HTMLFormElement>
@@ -15,6 +16,7 @@ type TOfferReviewFormProps = {
 
 function OfferReviewForm({ offerId }: TOfferReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const [isRejectedSent, setisRejectedSent] = useState<boolean>(false);
   const [reviewData, setReviewData] = useState<TReviewData>({
     rating: 0,
     comment: ''
@@ -27,7 +29,11 @@ function OfferReviewForm({ offerId }: TOfferReviewFormProps): JSX.Element {
 
   const handleReviewChange = (evt: TChangeEvent) => {
     const {value} = evt.target;
+
     setReviewData({...reviewData, comment: value});
+    if (isRejectedSent) {
+      setisRejectedSent(!isRejectedSent);
+    }
   };
 
   const handleRatingChange = (rating: number) => {
@@ -36,8 +42,14 @@ function OfferReviewForm({ offerId }: TOfferReviewFormProps): JSX.Element {
 
   const submitFormHandler = (evt: TFormEvent) => {
     evt.preventDefault();
-    dispatch(postReview({offerId:offerId, reviewData}));
-    setReviewData({...reviewData, rating: 0, comment: ''});
+    dispatch(postReview({offerId: offerId, reviewData}))
+      .then((response) => {
+        if (response.error) {
+          setisRejectedSent(!isRejectedSent);
+        }
+
+        setReviewData({...reviewData, rating: 0, comment: ''});
+      });
   };
 
   return (
@@ -54,6 +66,7 @@ function OfferReviewForm({ offerId }: TOfferReviewFormProps): JSX.Element {
         value={reviewData.comment}
         onChange={handleReviewChange}
       />
+      {isRejectedSent && <p className={styles.error}>Failed submit form. Please, try again :(</p>}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}

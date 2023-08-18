@@ -102,11 +102,14 @@ const reducer = createReducer(initialState, (builder) => {
       state.fetchReviewsStatus = RequestStatus.Rejected;
     })
     .addCase(postReview.pending, (state) => {
-      state.fetchReviewsStatus = RequestStatus.Pending;
+      state.postReviewStatus = RequestStatus.Pending;
     })
     .addCase(postReview.fulfilled, (state, action) => {
-      state.fetchReviewsStatus = RequestStatus.Success;
+      state.postReviewStatus = RequestStatus.Success;
       state.reviews = [action.payload, ...state.reviews];
+    })
+    .addCase(postReview.rejected, (state) => {
+      state.postReviewStatus = RequestStatus.Rejected;
     })
     .addCase(fetchFavorites.pending, (state) => {
       state.fetchFavoriteOffersStatus = RequestStatus.Pending;
@@ -130,9 +133,6 @@ const reducer = createReducer(initialState, (builder) => {
       } else {
         state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== updatedOffer.id);
       }
-    })
-    .addCase(postReview.rejected, (state) => {
-      state.fetchReviewsStatus = RequestStatus.Rejected;
     })
     .addCase(checkAuth.pending, (state) => {
       state.authorizationStatus = AuthorizationStatus.Unknown;
