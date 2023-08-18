@@ -120,12 +120,16 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeFavorite.fulfilled, (state, action) => {
       const updatedOffer = action.payload;
+
+      if (!updatedOffer) {
+        return;
+      }
+
       if (!state.favoriteOffers.some((offer) => offer.id === updatedOffer.id)) {
         state.favoriteOffers.push(updatedOffer);
       } else {
         state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== updatedOffer.id);
       }
-
     })
     .addCase(postReview.rejected, (state) => {
       state.fetchReviewsStatus = RequestStatus.Rejected;

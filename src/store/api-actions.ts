@@ -1,4 +1,4 @@
-import {APIRoute, AppRoute, NameSpace, TIMEOUT_SHOW_ERROR} from '../constants';
+import {APIRoute, AppRoute, AuthorizationStatus, NameSpace, TIMEOUT_SHOW_ERROR} from '../constants';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {fetchError, redirectToRoute} from './action';
 import {TFavoriteData, TOffer} from '../types/offer';
@@ -8,7 +8,7 @@ import {removeToken, setToken} from '../services/token';
 import {TOfferFull} from '../types/offerFull';
 import {TReview, TReviewData} from '../types/review';
 import {AxiosInstance} from 'axios';
-import {TAppDispatch} from '../types/state';
+import {TAppDispatch, TAppState} from '../types/state';
 
 type TExtraArg = {extra: AxiosInstance};
 
@@ -73,10 +73,17 @@ export const fetchFavorites = createAsyncThunk<
   );
 
 export const changeFavorite = createAsyncThunk<
-  TOffer, TFavoriteData, TExtraArg
+  TOffer, TFavoriteData, TExtraArg & {state: TAppState}
   >(
     `${NameSpace.Offer}/addFavorite`,
-    async ({id, status}, {extra: api}) => {
+    async ({id, status}, {extra: api, getState, dispatch}) => {
+      const authStatus = getState().authorizationStatus;
+
+      if (authStatus !== AuthorizationStatus.Auth) {
+        dispatch(redirectToRoute(AppRoute.Login));
+        return null;
+      }
+
       const {data} = await api.post<TOffer[]>(`${APIRoute.Favorite}/${id}/${status}`);
       return data;
     }
