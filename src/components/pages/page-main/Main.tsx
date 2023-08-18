@@ -6,6 +6,7 @@ import Cities from '../../cities/Cities';
 import {RequestStatus} from '../../../constants';
 import Spinner from '../../loading/spinner';
 import {Helmet} from 'react-helmet-async';
+import classNames from 'classnames';
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -25,7 +26,12 @@ function Main(): JSX.Element {
   }
 
   return (
-    <main className="page__main page__main--index">
+    <main className={classNames({
+      'page__main': true,
+      'page__main--index': true,
+      'page__main--index-empty': false
+    })}
+    >
       <Helmet>
         <title>Six cities - Cities</title>
       </Helmet>
@@ -35,7 +41,9 @@ function Main(): JSX.Element {
           {offersFromCity.length && <CitiesList selectedCity={activeCity}/>}
         </section>
       </div>
-      {Boolean(offersFromCity.length) && <Cities city={activeCity} offers={offersFromCity} />}
+      <div className="cities">
+        {Boolean(offersFromCity.length) && <Cities city={activeCity} offers={offersFromCity} />}
+      </div>
     </main>
   );
 }

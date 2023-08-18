@@ -1,9 +1,9 @@
-import {TCity} from '../../types/offer';
-import {useAppDispatch} from '../hooks';
-import classNames from 'classnames';
 import {Link} from 'react-router-dom';
+import {useAppDispatch} from '../hooks';
 import {setActiveCity} from '../../store/action';
+import {TCity} from '../../types/offer';
 import {CityNames} from '../../constants';
+import classNames from 'classnames';
 
 type TCitiesProps = {
   selectedCity: TCity;
@@ -21,7 +21,7 @@ function CitiesList({ selectedCity }: TCitiesProps): JSX.Element {
             <Link className={classNames({
               'locations__item-link': true,
               'tabs__item': true,
-              'tabs__item--active': selectedCity === city
+              'tabs__item--active': selectedCity.name === city
             })}
             onClick={(e) => {
               e.preventDefault();
