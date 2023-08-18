@@ -14,6 +14,7 @@ function Main(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const offersFetchingStatus = useAppSelector((state) => state.fetchOffersStatus);
   const offersFromCity = offers.filter((offer) => offer.city.name === activeCity);
+  const isHasOffers = Boolean(offersFromCity.length);
 
   useEffect(() => {
     dispatch(fetchOffers());
@@ -29,7 +30,7 @@ function Main(): JSX.Element {
     <main className={classNames({
       'page__main': true,
       'page__main--index': true,
-      'page__main--index-empty': false
+      'page__main--index-empty': !isHasOffers
     })}
     >
       <Helmet>
@@ -42,7 +43,7 @@ function Main(): JSX.Element {
         </section>
       </div>
       <div className="cities">
-        {Boolean(offersFromCity.length) && <Cities city={activeCity} offers={offersFromCity} />}
+        {Boolean(offersFromCity.length) && <Cities city={activeCity} isHasOffers={isHasOffers} offers={offersFromCity} />}
       </div>
     </main>
   );

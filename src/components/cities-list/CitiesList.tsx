@@ -6,7 +6,7 @@ import {CityNames} from '../../constants';
 import classNames from 'classnames';
 
 type TCitiesProps = {
-  selectedCity: TCity;
+  selectedCity: TCity['name'];
 }
 
 function CitiesList({ selectedCity }: TCitiesProps): JSX.Element {
@@ -21,7 +21,7 @@ function CitiesList({ selectedCity }: TCitiesProps): JSX.Element {
             <Link className={classNames({
               'locations__item-link': true,
               'tabs__item': true,
-              'tabs__item--active': selectedCity.name === city
+              'tabs__item--active': selectedCity === city
             })}
             onClick={(e) => {
               e.preventDefault();

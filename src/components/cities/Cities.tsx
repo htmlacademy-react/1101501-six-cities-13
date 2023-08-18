@@ -8,19 +8,20 @@ import MainEmpty from '../pages/page-main-empty/MainEmpty';
 type TCities = {
   city: TCity['name'];
   offers: TOffer[];
+  isHasOffers: boolean;
 }
 
-export function Cities({ city, offers }: TCities): JSX.Element {
+export function Cities({ city, offers, isHasOffers }: TCities): JSX.Element {
   const cityInfo = offers.find((cityData) => cityData?.city.name === city)?.city;
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
-  const isNotEmptyOffers = Boolean(offers.length);
+
 
   const handleCardHover = useCallback((offer: TOffer) => {
     setActiveOffer(offer);
   }, []);
 
   return (
-    isNotEmptyOffers
+    isHasOffers
       ? (
         <div className="cities__places-container container">
           <OffersList onOfferHover={handleCardHover} selectedCity={cityInfo} offers={offers} />
