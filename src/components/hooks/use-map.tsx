@@ -15,11 +15,7 @@ function useMap(
   useEffect(() => {
     if (mapRef?.current && !isRenderedRef.current) {
       const instanceLeaflet = new Map(mapRef.current, {
-        center: {
-          lat,
-          lng,
-        },
-        zoom
+        center: {lat, lng}, zoom
       });
 
       const layerLeaflet = new TileLayer(

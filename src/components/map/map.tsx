@@ -21,63 +21,59 @@ type TMapProps = {
 }
 
 function Map({targetOffer, city, offers, pageType}: TMapProps): JSX.Element {
+  const instanceMarkerLayer = useRef<null | LayerGroup>(null);
   const mapRef = useRef(null);
-  const currentMarkers = useRef([]);
   const map = useMap(mapRef, city);
 
-  const setMarkers = (offersData: TOffer[], layer: LayerGroup) => {
+  const setMarkers = (offersData: TOffer[], layer: LayerGroup | null) => {
+    if (!layer) {
+      return;
+    }
+
     offersData.forEach((offer) => {
       const markerIcon = new Marker({
         lat: offer.location.latitude,
         lng: offer.location.longitude
       });
+      markerIcon.setIcon(defaultCustomIcon).addTo(layer);
+    });
+  };
 
-      currentMarkers.current.push(markerIcon);
-
-      markerIcon.setIcon(
-        (targetOffer?.location.latitude === offer?.location.latitude)
-        && (targetOffer?.location.longitude === offer?.location.longitude)
-          ? currentCustomIcon
-          : defaultCustomIcon
-      ).addTo(layer);
+  const setTargetMarkerIcon = (currentLayer: LayerGroup | null, icon: typeof defaultCustomIcon) => {
+    currentLayer?.eachLayer((layer: Marker) => {
+      const {lat, lng} = layer.getLatLng();
+      if ((targetOffer?.location.latitude === lat) && (targetOffer?.location.longitude === lng)) {
+        layer.setIcon(icon);
+      }
     });
   };
 
   useEffect(() => {
     if (map) {
-      const markerLayer = layerGroup().addTo(map);
-      const currentMarker: Marker = currentMarkers.current.find((point: Marker) => {
-        const {lat, lng} = point.getLatLng();
-        return (targetOffer?.location.latitude === lat) && (targetOffer?.location.longitude === lng);
-      });
+      instanceMarkerLayer.current = layerGroup().addTo(map);
+      const markerLayer = instanceMarkerLayer.current;
 
-      if (currentMarker) {
-        currentMarker.setIcon(currentCustomIcon).addTo(markerLayer);
-      }
-
-      if (!currentMarker && currentMarkers.current.length === 0) {
-        setMarkers(offers, markerLayer);
-      }
-
-      return () => {
-        if (currentMarker) {
-          currentMarker.setIcon(defaultCustomIcon).addTo(markerLayer);
-        }
-      };
-    }
-  },[map, targetOffer]);
-
-  useEffect(() => {
-    if (map) {
-      const markerLayer = layerGroup().addTo(map);
       setMarkers(offers, markerLayer);
 
       return () => {
-        currentMarkers.current = [];
-        map.removeLayer(markerLayer);
+        if (markerLayer) {
+          instanceMarkerLayer.current = null;
+          map.removeLayer(markerLayer);
+        }
       };
     }
-  }, [city]);
+  },[map, city]);
+
+  useEffect(() => {
+    if (map) {
+      const markerLayer = instanceMarkerLayer.current;
+      setTargetMarkerIcon(markerLayer, currentCustomIcon);
+
+      return () => {
+        setTargetMarkerIcon(markerLayer, defaultCustomIcon);
+      };
+    }
+  }, [map, targetOffer]);
 
   return <section className={`${pageType}__map map`} ref={mapRef} />;
 }
