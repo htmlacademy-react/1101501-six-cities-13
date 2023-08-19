@@ -1,5 +1,5 @@
 import {TOfferFull} from '../../types/offerFull';
-import OfferReviewForm from '../offer-review-form/OfferReviewForm';
+import OfferReviewForm from '../offer-review-form/offer-review-form';
 import {JSX, useState} from 'react';
 import classNames from 'classnames';
 import {calculateRatingInWidthPercent} from '../../utils/utils';

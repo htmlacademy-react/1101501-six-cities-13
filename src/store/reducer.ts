@@ -31,7 +31,6 @@ type TInitialState = {
   fetchFavoriteOffersStatus: RequestStatus;
   nearPlaces: TOffer[];
   fetchNearPlacesStatus: RequestStatus;
-  offersFromCity: TOffer[];
   error: string | null;
   user: TAuthUserData | null;
   loginStatus: RequestStatus;
@@ -51,7 +50,6 @@ const initialState: TInitialState = {
   fetchFavoriteOffersStatus: RequestStatus.Idle,
   nearPlaces: [],
   fetchNearPlacesStatus: RequestStatus.Idle,
-  offersFromCity: [],
   error: null,
   user: null,
   loginStatus: RequestStatus.Idle,
@@ -65,7 +63,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOffers.fulfilled, (state, action) => {
       state.fetchOffersStatus = RequestStatus.Success;
-      state.offers = action.payload;
+      state.offers = action.payload || [];
     })
     .addCase(fetchOffers.rejected, (state) => {
       state.fetchOffersStatus = RequestStatus.Rejected;
@@ -86,7 +84,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchNearPlaces.fulfilled, (state, action) => {
       state.fetchNearPlacesStatus = RequestStatus.Success;
-      state.nearPlaces = action.payload;
+      state.nearPlaces = action.payload || [];
     })
     .addCase(fetchNearPlaces.rejected, (state) => {
       state.fetchNearPlacesStatus = RequestStatus.Rejected;
@@ -96,7 +94,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchReviews.fulfilled, (state, action) => {
       state.fetchReviewsStatus = RequestStatus.Success;
-      state.reviews = action.payload;
+      state.reviews = action.payload || [];
     })
     .addCase(fetchReviews.rejected, (state) => {
       state.fetchReviewsStatus = RequestStatus.Rejected;
@@ -116,7 +114,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFavorites.fulfilled, (state, action) => {
       state.fetchFavoriteOffersStatus = RequestStatus.Success;
-      state.favoriteOffers = action.payload;
+      state.favoriteOffers = action.payload || [];
     })
     .addCase(fetchFavorites.rejected, (state) => {
       state.fetchFavoriteOffersStatus = RequestStatus.Rejected;

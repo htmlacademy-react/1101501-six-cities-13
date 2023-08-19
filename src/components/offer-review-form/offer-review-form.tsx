@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
-import OfferRating from './OfferRating';
+import OfferRating from './offer-rating';
 import {OfferReviewLimit} from '../../constants';
 import {TReviewData} from '../../types/review';
 import {TOfferFull} from '../../types/offerFull';

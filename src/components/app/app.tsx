@@ -1,11 +1,11 @@
 import {Routes, Route} from 'react-router-dom';
-import Main from '../pages/page-main/Main';
-import PageNotFound from '../pages/page-not-found/PageNotFound';
-import Login from '../pages/page-login/Login';
-import Offer from '../pages/page-offer/Offer';
-import Favorites from '../pages/page-favorites/Favorites';
-import Layout from '../layout/Layout';
-import PrivateRoute from '../private-route/PrivateRoute';
+import Main from '../pages/page-main/main';
+import PageNotFound from '../pages/page-not-found/page-not-found';
+import Login from '../pages/page-login/login';
+import Offer from '../pages/page-offer/offer';
+import Favorites from '../pages/page-favorites/favorites';
+import Layout from '../layout/layout';
+import PrivateRoute from '../private-route/private-route';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppSelector} from '../hooks';
 import Spinner from '../loading/spinner';

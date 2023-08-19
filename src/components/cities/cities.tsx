@@ -1,9 +1,9 @@
-import OffersList from '../offers-list/OffersList';
-import Map from '../map/Map';
-import {memo, useCallback, useState} from 'react';
+import OffersList from '../offers-list/offers-list';
+import Map from '../map/map';
+import {useCallback, useState} from 'react';
 import {TCity, TOffer} from '../../types/offer';
 import {MapPageType} from '../../constants';
-import MainEmpty from '../pages/page-main-empty/MainEmpty';
+import MainEmpty from '../pages/page-main-empty/main-empty';
 
 type TCities = {
   city: TCity['name'];
@@ -11,10 +11,9 @@ type TCities = {
   isHasOffers: boolean;
 }
 
-export function Cities({ city, offers, isHasOffers }: TCities): JSX.Element {
+function Cities({ city, offers, isHasOffers }: TCities): JSX.Element {
   const cityInfo = offers.find((cityData) => cityData?.city.name === city)?.city;
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
-
 
   const handleCardHover = useCallback((offer: TOffer) => {
     setActiveOffer(offer);
@@ -35,4 +34,4 @@ export function Cities({ city, offers, isHasOffers }: TCities): JSX.Element {
   );
 }
 
-export default memo(Cities);
+export default Cities;

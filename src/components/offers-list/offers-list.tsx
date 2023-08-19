@@ -1,6 +1,6 @@
 import {TCity, TOffer} from '../../types/offer';
-import OfferCard from '../offer-card/OfferCard';
-import SortingForm from '../offer-sort-form/SortingForm';
+import OfferCard from '../offer-card/offer-card';
+import SortingForm from '../offer-sort-form/sorting-form';
 import {OfferCardPageType, SortingMap} from '../../constants';
 import {TSorting} from '../../types/sorting';
 import {memo, useState} from 'react';

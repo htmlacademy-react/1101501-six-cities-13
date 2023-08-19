@@ -1,11 +1,11 @@
-import OfferCard from '../../offer-card/OfferCard';
+import OfferCard from '../../offer-card/offer-card';
 import {AppRoute, OfferCardPageType} from '../../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
 import {setActiveCity} from '../../../store/action';
 import {TCity} from '../../../types/offer';
-import FavoritesEmpty from '../page-favorites-empty/FavoritesEmpty';
+import FavoritesEmpty from '../page-favorites-empty/favorites-empty';
 
 function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();

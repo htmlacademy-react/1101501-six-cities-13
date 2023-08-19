@@ -1,7 +1,7 @@
-import {memo, useEffect, useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import {Icon, Marker, layerGroup, LayerGroup} from 'leaflet';
 import {TCity, TOffer} from '../../types/offer';
-import useMap from '../hooks/useMap';
+import useMap from '../hooks/use-map';
 import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../constants';
 import 'leaflet/dist/leaflet.css';
 
@@ -82,4 +82,4 @@ function Map({targetOffer, city, offers, pageType}: TMapProps): JSX.Element {
   return <section className={`${pageType}__map map`} ref={mapRef} />;
 }
 
-export default memo(Map);
+export default Map;

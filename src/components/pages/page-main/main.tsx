@@ -1,8 +1,8 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
 import {fetchOffers} from '../../../store/api-actions';
-import CitiesList from '../../cities-list/CitiesList';
-import Cities from '../../cities/Cities';
+import CitiesList from '../../cities-list/cities-list';
+import Cities from '../../cities/cities';
 import {RequestStatus} from '../../../constants';
 import Spinner from '../../loading/spinner';
 import {Helmet} from 'react-helmet-async';

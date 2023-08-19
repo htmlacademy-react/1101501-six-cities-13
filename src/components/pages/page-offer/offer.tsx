@@ -10,10 +10,10 @@ import {
   RequestStatus
 } from '../../../constants';
 import Spinner from '../../loading/spinner';
-import Map from '../../map/Map';
+import Map from '../../map/map';
 import {TOffer} from '../../../types/offer';
-import OfferCard from '../../offer-card/OfferCard';
-import PageNotFound from '../page-not-found/PageNotFound';
+import OfferCard from '../../offer-card/offer-card';
+import PageNotFound from '../page-not-found/page-not-found';
 
 function Offer(): JSX.Element {
   const dispatch = useAppDispatch();
