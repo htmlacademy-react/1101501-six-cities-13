@@ -1,60 +1,25 @@
-import {AuthorizationStatus, RequestStatus} from '../../../constants';
-import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {TAuthData} from '../../../types/auth-data';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {logIn} from '../../../store/api-actions';
+import {AppRoute, AuthorizationStatus, CityNames} from '../../../constants';
+import {useEffect, useMemo} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {useAppDispatch} from '../../hooks';
 import {Helmet} from 'react-helmet-async';
-
-type TChangeEvent = ChangeEvent<HTMLInputElement>
-type TSubmitEvent = FormEvent
+import {getRandomPositiveNumber} from '../../../utils/utils';
+import {setActiveCity} from '../../../store/action';
+import {LoginForm} from '../../login-form/login-form';
 
 type TLoginProps = {
   authStatus: AuthorizationStatus;
 }
 
-const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-const PASSWORD_INVALID_MESSAGE = 'Password must contain more than 8 chars and at least one letter and one digit';
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const EMAIL_INVALID_MESSAGE = 'Please, enter correct email address';
-const FAILED_SUBMIT_FORM = 'Failed submit form. Please, try again!';
-
 function Login({ authStatus }: TLoginProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const logInStatus = useAppSelector((state) => state.loginStatus);
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<TAuthData>({
-    email: '',
-    password: '',
-  });
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const randomLocation = useMemo(
+    () => CityNames[getRandomPositiveNumber(CityNames.length - 1)], []
+  );
 
-  useEffect(() => {
-    if (logInStatus === RequestStatus.Rejected) {
-      setErrorMessage(FAILED_SUBMIT_FORM);
-    }
-  },[logInStatus]);
-
-  const handleFormChange = (evt: TChangeEvent) => {
-    const {name, value} = evt.target;
-
-    if (errorMessage) {
-      setErrorMessage(null);
-    }
-    setFormData({...formData, [name]: value});
-  };
-
-  const handleFormSubmit = (evt: TSubmitEvent) => {
-    evt.preventDefault();
-    if (!EMAIL_REGEX.test(formData.email)) {
-      setErrorMessage(EMAIL_INVALID_MESSAGE);
-      return;
-    }
-    if (!PASSWORD_REGEX.test(formData.password)) {
-      setErrorMessage(PASSWORD_INVALID_MESSAGE);
-    }
-    dispatch(logIn(formData));
-
+  const handleCityLabelClick = () => {
+    dispatch(setActiveCity(randomLocation));
   };
 
   useEffect(() => {
@@ -71,40 +36,13 @@ function Login({ authStatus }: TLoginProps): JSX.Element {
       <div className="page__login-container container">
         <section className="login">
           <h1 className="login__title">Sign in</h1>
-          <form className="login__form form" action="#" method="post" onSubmit={handleFormSubmit}>
-            <div className="login__input-wrapper form__input-wrapper">
-              <label className="visually-hidden">E-mail</label>
-              <input
-                className="login__input form__input"
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleFormChange}
-              />
-            </div>
-            <div className="login__input-wrapper form__input-wrapper">
-              <label className="visually-hidden">Password</label>
-              <input
-                className="login__input form__input"
-                type="password"
-                value={formData.password}
-                name="password"
-                placeholder="Password"
-                onChange={handleFormChange}
-              />
-            </div>
-            {errorMessage && <div className="login__input-wrapper form__input-wrapper">{errorMessage}</div>}
-            <button className="login__submit form__submit button" type="submit">
-              Sign in
-            </button>
-          </form>
+          <LoginForm />
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="#">
-              <span>Amsterdam</span>
-            </a>
+            <Link className="locations__item-link" to={AppRoute.Root} onClick={handleCityLabelClick}>
+              <span>{randomLocation}</span>
+            </Link>
           </div>
         </section>
       </div>

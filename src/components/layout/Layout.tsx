@@ -21,8 +21,10 @@ function Layout({ authStatus }: TLayoutProps): JSX.Element {
   };
 
   useEffect(() => {
-    dispatch(fetchFavorites());
-  }, [dispatch]);
+    if (user) {
+      dispatch(fetchFavorites());
+    }
+  }, [dispatch, user]);
 
   return (
     <div className={classNames({
@@ -30,7 +32,7 @@ function Layout({ authStatus }: TLayoutProps): JSX.Element {
       'page--gray': pathname.includes(AppRoute.Login) || pathname === AppRoute.Root,
       'page--login': pathname.includes(AppRoute.Login),
       'page--main': pathname === AppRoute.Root,
-      'page--favorites-empty': pathname.includes('favorites-empty')
+      'page--favorites-empty': Boolean(favoriteOffers.length === 0)
     })}
     >
       <header className="header">

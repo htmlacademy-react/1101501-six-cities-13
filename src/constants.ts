@@ -51,19 +51,6 @@ export enum OfferReviewLimit {
   MinRating = 1,
 }
 
-export const OFFER_REVIEW_RATINGS = [
-  { ratingValue: 1, ratingText: 'terribly' },
-  { ratingValue: 2, ratingText: 'badly' },
-  { ratingValue: 3, ratingText: 'not bad' },
-  { ratingValue: 4, ratingText: 'good' },
-  { ratingValue: 5, ratingText: 'perfect' },
-] as const;
-
-export const MONTHS = [
-  'January','February','March','April','May','June','July',
-  'August','September','October','November','December'
-] as const;
-
 export const CityNames: string[] = [
   'Paris',
   'Cologne',
@@ -80,13 +67,26 @@ export enum SortingMap {
     TopRated = 'Top rated first',
 }
 
+export const OFFER_REVIEW_RATINGS = [
+  { ratingValue: 1, ratingText: 'terribly' },
+  { ratingValue: 2, ratingText: 'badly' },
+  { ratingValue: 3, ratingText: 'not bad' },
+  { ratingValue: 4, ratingText: 'good' },
+  { ratingValue: 5, ratingText: 'perfect' },
+] as const;
+
+export const MONTHS = [
+  'January','February','March','April','May','June','July',
+  'August','September','October','November','December'
+] as const;
+
 export const ASSETS_BASE_URL = '/img';
 export const URL_MARKER_DEFAULT = `${ASSETS_BASE_URL}/pin.svg`;
 export const URL_MARKER_CURRENT = `${ASSETS_BASE_URL}/pin-active.svg`;
 
 export const BACKEND_BASE_URL = 'https://13.design.pages.academy/six-cities';
 export const REQUEST_TIMEOUT = 5000;
-export const TIMEOUT_SHOW_ERROR = 2000;
+export const TIMEOUT_SHOW_ERROR = 4000;
 
 export const DEFAULT_LOCATION = 'Paris';
 

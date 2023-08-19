@@ -5,6 +5,7 @@ import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
 import {setActiveCity} from '../../../store/action';
 import {TCity} from '../../../types/offer';
+import FavoritesEmpty from '../page-favorites-empty/FavoritesEmpty';
 
 function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -17,42 +18,46 @@ function Favorites(): JSX.Element {
 
   return (
     <>
-      <main className="page__main page__main--favorites">
-        <Helmet>
-          <title>Six cities - Saved listing</title>
-        </Helmet>
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {cities.map((city) => (
-                <li key={city} className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <Link
-                        className="locations__item-link"
-                        to={AppRoute.Root}
-                        onClick={() => handleChangeCity(city)}
-                      >
-                        <span>{city}</span>
-                      </Link>
+      {favoriteOffers.length > 0 ? (
+        <main className="page__main page__main--favorites">
+          <Helmet>
+            <title>Six cities - Saved listing</title>
+          </Helmet>
+          <div className="page__favorites-container container">
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
+                {cities.map((city) => (
+                  <li key={city} className="favorites__locations-items">
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <Link
+                          className="locations__item-link"
+                          to={AppRoute.Root}
+                          onClick={() => handleChangeCity(city)}
+                        >
+                          <span>{city}</span>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                  <div className="favorites__places">
-                    {favoriteOffers.map((offer) => {
-                      const cityName = offer.city.name;
-                      if (city !== cityName) {
-                        return null;
-                      }
-                      return <OfferCard key={offer.id} offer={offer} cardType={OfferCardPageType.Favorites}/>;
-                    })}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </main>
+                    <div className="favorites__places">
+                      {favoriteOffers.map((offer) => {
+                        const cityName = offer.city.name;
+                        if (city !== cityName) {
+                          return null;
+                        }
+                        return <OfferCard key={offer.id} offer={offer} cardType={OfferCardPageType.Favorites}/>;
+                      })}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+        </main>
+      ) : (
+        <FavoritesEmpty />
+      )}
       <footer className="footer container">
         <Link to={AppRoute.Root} className="footer__logo-link">
           <img
