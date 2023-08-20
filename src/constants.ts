@@ -5,11 +5,6 @@ export enum AppRoute {
   Offer = '/offer',
 }
 
-export enum MapPageType {
-  Cities = 'cities',
-  Offer = 'offer',
-}
-
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
@@ -43,6 +38,21 @@ export enum OfferCardPageType {
   Cities = 'cities',
   Favorites = 'favorites',
   NearPlaces = 'near-places'
+}
+
+export enum MapPageType {
+  Cities = 'cities',
+  Offer = 'offer',
+}
+
+export enum FavoriteButtonPageType {
+  Default = 'place-card',
+  Offer = 'offer',
+}
+
+export enum FavoriteIconSize {
+  Small = {width: 18, height: 19},
+  Large = {width: 31, height: 33}
 }
 
 export enum OfferReviewLimit {

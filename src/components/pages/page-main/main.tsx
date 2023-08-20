@@ -17,15 +17,7 @@ function Main(): JSX.Element {
   const isHasOffers = Boolean(offersFromCity.length);
 
   useEffect(() => {
-    let isMounted = true;
-
-    if (isMounted) {
-      dispatch(fetchOffers());
-    }
-
-    return () => {
-      isMounted = false;
-    };
+    dispatch(fetchOffers());
   }, [dispatch]);
 
   if (offersFetchingStatus === RequestStatus.Pending) {
