@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, useCallback, useState} from 'react';
 import OfferRating from './offer-rating';
 import {OfferReviewLimit} from '../../constants';
 import {TReviewData} from '../../types/review';
@@ -16,54 +16,58 @@ type TOfferReviewFormProps = {
 
 function OfferReviewForm({ offerId }: TOfferReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const [isRejectedSent, setisRejectedSent] = useState<boolean>(false);
-  const [reviewData, setReviewData] = useState<TReviewData>({
+  const [isRejectedSent, setIsRejectedSent] = useState<boolean>(false);
+  const [reviewValue, setReviewValue] = useState<TReviewData['comment']>('');
+  const [ratingValue, setRatingValue] = useState<TReviewData['rating']>(0);
+  /*const [reviewData, setReviewData] = useState<TReviewData>({
     rating: 0,
     comment: ''
-  });
+  });*/
 
-  const isValidForm = ((reviewData.rating >= OfferReviewLimit.MinRating)
-    && (OfferReviewLimit.ReviewMaxLength >= reviewData.comment.length)
-    && (OfferReviewLimit.ReviewMinLength <= reviewData.comment.length)
+  const isValidForm = ((ratingValue >= OfferReviewLimit.MinRating)
+    && (OfferReviewLimit.ReviewMaxLength >= reviewValue.length)
+    && (OfferReviewLimit.ReviewMinLength <= reviewValue.length)
   );
 
   const handleReviewChange = (evt: TChangeEvent) => {
     const {value} = evt.target;
 
-    setReviewData({...reviewData, comment: value});
+    setReviewValue(value);
     if (isRejectedSent) {
-      setisRejectedSent(!isRejectedSent);
+      setIsRejectedSent(!isRejectedSent);
     }
   };
 
-  const handleRatingChange = (rating: number) => {
-    setReviewData({...reviewData, rating});
-  };
+  const handleRatingChange = useCallback((rating: number) => {
+    setRatingValue(rating);
+  }, []);
 
-  const submitFormHandler = (evt: TFormEvent) => {
+  const handleFormSubmit = (evt: TFormEvent) => {
     evt.preventDefault();
+    const reviewData = {rating: ratingValue, comment: reviewValue};
     dispatch(postReview({offerId: offerId, reviewData}))
       .then((response) => {
         if (response.error) {
-          setisRejectedSent(!isRejectedSent);
+          setIsRejectedSent(!isRejectedSent);
         }
 
-        setReviewData({...reviewData, rating: 0, comment: ''});
+        setReviewValue('');
+        setRatingValue(0);
       });
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={submitFormHandler}>
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <OfferRating initialValue={reviewData.rating} onRatingChange={handleRatingChange} />
+      <OfferRating initialValue={ratingValue} onRatingChange={handleRatingChange} />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={reviewData.comment}
+        value={reviewValue}
         onChange={handleReviewChange}
       />
       {isRejectedSent && <p className={styles.error}>Failed submit form. Please, try again :(</p>}

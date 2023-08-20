@@ -23,8 +23,8 @@ function CitiesList({ selectedCity }: TCitiesProps): JSX.Element {
               'tabs__item': true,
               'tabs__item--active': selectedCity === city
             })}
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={(evt) => {
+              evt.preventDefault();
               dispatch(setActiveCity(city));
             }}
             to="/"

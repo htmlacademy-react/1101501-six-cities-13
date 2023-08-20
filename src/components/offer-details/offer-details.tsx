@@ -6,7 +6,6 @@ import {calculateRatingInWidthPercent} from '../../utils/utils';
 import OfferReviews from '../offer-reviews/offer-reviews';
 import {AuthorizationStatus, FavoriteButtonPageType} from '../../constants';
 import {Helmet} from 'react-helmet-async';
-import {useAppDispatch} from '../hooks';
 import FavoriteButton from '../favorite-button/favorite-button';
 
 type TOfferDetailsProps = {
@@ -19,8 +18,6 @@ function OfferDetails({ offer, authStatus }: TOfferDetailsProps): JSX.Element {
     images, title, isPremium, isFavorite, rating, type, bedrooms, maxAdults, price, goods, host, description, id
   } = offer;
   const {isPro, name, avatarUrl} = host;
-
-  const dispatch = useAppDispatch();
 
   return (
     <>

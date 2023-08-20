@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, memo} from 'react';
 import {OFFER_REVIEW_RATINGS} from '../../constants';
 
 type TChangeEvent = ChangeEvent<HTMLInputElement>
@@ -10,7 +10,8 @@ type TOfferRatingProps = {
 
 function OfferRating({ initialValue, onRatingChange }: TOfferRatingProps): JSX.Element {
   const ratings = [...OFFER_REVIEW_RATINGS].sort((a, b) => b.ratingValue - a.ratingValue);
-  const changeRatingHandler = (evt: TChangeEvent) => {
+
+  const handleRatingChange = (evt: TChangeEvent) => {
     const ratingValue = Number(evt.target.value);
     onRatingChange(ratingValue);
   };
@@ -29,7 +30,7 @@ function OfferRating({ initialValue, onRatingChange }: TOfferRatingProps): JSX.E
               value={ratingValue}
               id={generateIdValue}
               type="radio"
-              onChange={changeRatingHandler}
+              onChange={handleRatingChange}
               checked={initialValue === ratingValue}
             />
             <label
@@ -48,4 +49,4 @@ function OfferRating({ initialValue, onRatingChange }: TOfferRatingProps): JSX.E
   );
 }
 
-export default OfferRating;
+export default memo(OfferRating);

@@ -32,7 +32,7 @@ function Layout({ authStatus }: TLayoutProps): JSX.Element {
       'page--gray': pathname.includes(AppRoute.Login) || pathname === AppRoute.Root,
       'page--login': pathname.includes(AppRoute.Login),
       'page--main': pathname === AppRoute.Root,
-      'page--favorites-empty': Boolean(favoriteOffers.length === 0)
+      'page--favorites-empty': pathname.includes(AppRoute.Favorites) && Boolean(favoriteOffers.length === 0)
     })}
     >
       <header className="header">
