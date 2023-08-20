@@ -46,23 +46,13 @@ function Offer(): JSX.Element {
     }
   }, [offerId, dispatch]);
 
-  if (
-    offerFetchingStatus === RequestStatus.Pending
-    || nearPlacesFetchingStatus === RequestStatus.Pending
-  ) {
-    return (
-      <Spinner />
-    );
+  if (offerFetchingStatus === RequestStatus.Pending
+    || nearPlacesFetchingStatus === RequestStatus.Pending) {
+    return <Spinner />;
   }
 
-  if (offerFetchingStatus === RequestStatus.Rejected) {
-    return (
-      <PageNotFound />
-    );
-  }
-
-  {if ((offerFetchingStatus === RequestStatus.Success) && offer) {
-    return (
+  return (offerFetchingStatus === RequestStatus.Success) && offer ?
+    (
       <main className="page__main page__main--offer">
         <section className="offer">
           <OfferDetails offer={offer} authStatus={authStatus}/>
@@ -88,8 +78,9 @@ function Offer(): JSX.Element {
           )}
         </div>
       </main>
+    ) : (
+      <PageNotFound />
     );
-  }}
 }
 
 export default Offer;

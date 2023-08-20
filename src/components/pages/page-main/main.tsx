@@ -21,9 +21,7 @@ function Main(): JSX.Element {
   }, [dispatch]);
 
   if (offersFetchingStatus === RequestStatus.Pending) {
-    return (
-      <Spinner />
-    );
+    return <Spinner />;
   }
 
   return (

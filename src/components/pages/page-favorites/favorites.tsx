@@ -1,20 +1,26 @@
 import OfferCard from '../../offer-card/offer-card';
-import {AppRoute, OfferCardPageType} from '../../../constants';
+import {AppRoute, OfferCardPageType, RequestStatus} from '../../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
 import {setActiveCity} from '../../../store/action';
 import {TCity} from '../../../types/offer';
 import FavoritesEmpty from '../page-favorites-empty/favorites-empty';
+import Spinner from '../../loading/spinner';
 
 function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();
   const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
+  const fetchFavoriteOffersStatus = useAppSelector((state) => state.fetchFavoriteOffersStatus);
   const cities:string[] = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
 
   const handleChangeCity = (city: TCity['name']) => {
     dispatch(setActiveCity(city));
   };
+
+  if (fetchFavoriteOffersStatus === RequestStatus.Pending) {
+    return <Spinner />;
+  }
 
   return (
     <>
