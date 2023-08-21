@@ -12,7 +12,6 @@ export const redirect: Middleware<unknown, Reducer> =
         if (action.type === `${NameSpace.User}/redirectToRoute`) {
           browserHistory.push(action.payload);
         }
-
         return next(action);
       };
 export default redirect;
