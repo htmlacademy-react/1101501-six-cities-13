@@ -4,7 +4,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks';
 import {Helmet} from 'react-helmet-async';
 import {getRandomPositiveNumber} from '../../../utils/utils';
-import {setActiveCity} from '../../../store/action';
+import {setActiveCity} from '../../../store/app-data/app-data.slice';
 import {LoginForm} from '../../login-form/login-form';
 
 type TLoginProps = {

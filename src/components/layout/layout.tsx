@@ -4,6 +4,8 @@ import {useAppDispatch, useAppSelector} from '../hooks';
 import {fetchFavorites, logOut} from '../../store/api-actions';
 import {MouseEvent, useEffect} from 'react';
 import classNames from 'classnames';
+import {getFavorites} from '../../store/favorites-data/favorites-data.selectors';
+import {getUser} from '../../store/user-data/user-data.selectors';
 
 type TLayoutProps = {
   authStatus: AuthorizationStatus;
@@ -11,8 +13,8 @@ type TLayoutProps = {
 
 function Layout({ authStatus }: TLayoutProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
-  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
+  const user = useAppSelector(getUser);
+  const favoriteOffers = useAppSelector(getFavorites);
   const {pathname} = useLocation();
 
   const handleLogOutClick = (evt: MouseEvent<HTMLAnchorElement>): void => {

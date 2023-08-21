@@ -7,12 +7,14 @@ import {RequestStatus} from '../../../constants';
 import Spinner from '../../loading/spinner';
 import {Helmet} from 'react-helmet-async';
 import classNames from 'classnames';
+import {getSelectedCity} from '../../../store/app-data/app-data.selectors';
+import {getOffers, getOffersFetchingStatus} from '../../../store/offers-data/offers-data.selectors';
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
-  const activeCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
-  const offersFetchingStatus = useAppSelector((state) => state.fetchOffersStatus);
+  const activeCity = useAppSelector(getSelectedCity);
+  const offers = useAppSelector(getOffers);
+  const offersFetchingStatus = useAppSelector(getOffersFetchingStatus);
   const offersFromCity = offers.filter((offer) => offer.city.name === activeCity);
   const isHasOffers = Boolean(offersFromCity.length);
 

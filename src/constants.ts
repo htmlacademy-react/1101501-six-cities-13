@@ -15,10 +15,13 @@ export enum APIRoute {
 }
 
 export enum NameSpace {
-  Main = 'MAIN',
+  App = 'APP',
+  User = 'USER',
   Offer = 'OFFER',
-  Data = 'DATA',
-  User = 'USER'
+  Offers = 'OFFERS',
+  Favorites = 'FAVORITES',
+  NearPlaces = 'NEAR_PLACES',
+  Reviews = 'REVIEWS'
 }
 
 export enum AuthorizationStatus {

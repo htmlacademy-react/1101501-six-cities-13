@@ -3,15 +3,16 @@ import {AppRoute, OfferCardPageType, RequestStatus} from '../../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
-import {setActiveCity} from '../../../store/action';
+import {setActiveCity} from '../../../store/app-data/app-data.slice';
 import {TCity} from '../../../types/offer';
 import FavoritesEmpty from '../page-favorites-empty/favorites-empty';
 import Spinner from '../../loading/spinner';
+import {getFavorites, getFavoritesFetchingStatus} from '../../../store/favorites-data/favorites-data.selectors';
 
 function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();
-  const favoriteOffers = useAppSelector((state) => state.favoriteOffers);
-  const fetchFavoriteOffersStatus = useAppSelector((state) => state.fetchFavoriteOffersStatus);
+  const favoriteOffers = useAppSelector(getFavorites);
+  const fetchFavoriteOffersStatus = useAppSelector(getFavoritesFetchingStatus);
   const cities:string[] = [...new Set(favoriteOffers.map((offer) => offer.city.name))];
 
   const handleChangeCity = (city: TCity['name']) => {

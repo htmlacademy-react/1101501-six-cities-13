@@ -3,6 +3,7 @@ import {TAuthData} from '../../types/auth-data';
 import {RequestStatus} from '../../constants';
 import {logIn} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../hooks';
+import {getLoginStatus} from '../../store/user-data/user-data.selectors';
 
 type TChangeEvent = ChangeEvent<HTMLInputElement>
 type TSubmitEvent = FormEvent
@@ -15,7 +16,7 @@ const FAILED_SUBMIT_FORM = 'Failed submit form. Please, try again!';
 
 export function LoginForm(): JSX.Element {
   const dispatch = useAppDispatch();
-  const logInStatus = useAppSelector((state) => state.loginStatus);
+  const logInStatus = useAppSelector(getLoginStatus);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState<TAuthData>({
     email: '',

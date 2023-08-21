@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {useAppDispatch} from '../hooks';
-import {setActiveCity} from '../../store/action';
+import {setActiveCity} from '../../store/app-data/app-data.slice';
 import {TCity} from '../../types/offer';
 import {CityNames} from '../../constants';
 import classNames from 'classnames';

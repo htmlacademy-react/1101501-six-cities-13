@@ -12,9 +12,10 @@ import Spinner from '../loading/spinner';
 import {HelmetProvider} from 'react-helmet-async';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import {getAuthorizationStatus} from '../../store/user-data/user-data.selectors';
 
 function App(): JSX.Element {
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector(getAuthorizationStatus);
 
   if (authStatus === AuthorizationStatus.Unknown) {
     return (
