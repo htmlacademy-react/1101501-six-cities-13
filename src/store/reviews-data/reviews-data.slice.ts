@@ -1,0 +1,41 @@
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {TInitialState} from '../../types/state';
+import {NameSpace, RequestStatus} from '../../constants';
+import {fetchReviews, postReview} from '../api-actions';
+
+type TReviewsDataState = Pick<TInitialState, 'reviews' | 'fetchReviewsStatus' | 'postReviewStatus'>;
+
+const initialState: TReviewsDataState = {
+  reviews: [],
+  fetchReviewsStatus: RequestStatus.Idle,
+  postReviewStatus: RequestStatus.Idle,
+};
+
+export const reviewsDataSlice = createSlice({
+  name: NameSpace.Reviews,
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(fetchReviews.pending, (state) => {
+        state.fetchReviewsStatus = RequestStatus.Pending;
+      })
+      .addCase(fetchReviews.fulfilled, (state, action: PayloadAction<TReviewsDataState['reviews']>) => {
+        state.fetchReviewsStatus = RequestStatus.Success;
+        state.reviews = action.payload || [];
+      })
+      .addCase(fetchReviews.rejected, (state) => {
+        state.fetchReviewsStatus = RequestStatus.Rejected;
+      })
+      .addCase(postReview.pending, (state) => {
+        state.postReviewStatus = RequestStatus.Pending;
+      })
+      .addCase(postReview.fulfilled, (state, action: PayloadAction<TReviewsDataState['reviews']>) => {
+        state.postReviewStatus = RequestStatus.Success;
+        state.reviews = [action.payload, ...state.reviews];
+      })
+      .addCase(postReview.rejected, (state) => {
+        state.postReviewStatus = RequestStatus.Rejected;
+      });
+  },
+});

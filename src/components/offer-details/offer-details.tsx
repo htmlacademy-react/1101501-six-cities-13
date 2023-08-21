@@ -1,10 +1,12 @@
 import {TOfferFull} from '../../types/offerFull';
-import OfferReviewForm from '../offer-review-form/OfferReviewForm';
+import OfferReviewForm from '../offer-review-form/offer-review-form';
 import {JSX} from 'react';
 import classNames from 'classnames';
 import {calculateRatingInWidthPercent} from '../../utils/utils';
 import OfferReviews from '../offer-reviews/offer-reviews';
-import {AuthorizationStatus} from '../../constants';
+import {AuthorizationStatus, FavoriteButtonPageType} from '../../constants';
+import {Helmet} from 'react-helmet-async';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 type TOfferDetailsProps = {
   offer: TOfferFull;
@@ -20,6 +22,9 @@ function OfferDetails({ offer, authStatus }: TOfferDetailsProps): JSX.Element {
   return (
     <>
       <div className="offer__gallery-container container">
+        <Helmet>
+          <title>Six cities - {offer.title}</title>
+        </Helmet>
         <div className="offer__gallery">
           {images.map((imageUrl) => (
             <div key={imageUrl} className="offer__image-wrapper">
@@ -44,21 +49,7 @@ function OfferDetails({ offer, authStatus }: TOfferDetailsProps): JSX.Element {
             <h1 className="offer__name">
               {title}
             </h1>
-            <button
-              className={classNames(
-                {
-                  'offer__bookmark-button': true,
-                  'button': true,
-                  'offer__bookmark-button--active': isFavorite,
-                }
-              )}
-              type="button"
-            >
-              <svg className="offer__bookmark-icon" width={31} height={33}>
-                <use xlinkHref="#icon-bookmark" />
-              </svg>
-              <span className="visually-hidden">To bookmarks</span>
-            </button>
+            <FavoriteButton id={id} isActive={isFavorite} pageType={FavoriteButtonPageType.Offer} />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">

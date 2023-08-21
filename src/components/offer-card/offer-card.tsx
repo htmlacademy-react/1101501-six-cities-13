@@ -1,7 +1,8 @@
 import {TOffer} from '../../types/offer';
-import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../constants';
+import {AppRoute, FavoriteButtonPageType} from '../../constants';
+import {calculateRatingInWidthPercent} from '../../utils/utils';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 type TOfferCardProps = {
   offer: TOffer;
@@ -10,14 +11,13 @@ type TOfferCardProps = {
 }
 
 function OfferCard({ offer, cardType, targetOffer }: TOfferCardProps): JSX.Element {
-  const {isPremium, isFavorite, previewImage, title, type, rating, price} = offer;
-  const [isFavoriteOffer, setIsFavoriteOffer] = useState<boolean>(isFavorite);
-  const handleFavoriteOfferClick = () => {
-    setIsFavoriteOffer(!isFavoriteOffer);
-  };
+  const {isPremium, isFavorite, previewImage, title, type, rating, price, id} = offer;
 
   return (
-    <article className={`${cardType}__card place-card`} onMouseOver={() => targetOffer && targetOffer(offer)}>
+    <article className={`${cardType}__card place-card`}
+      onMouseOver={() => targetOffer?.(offer)}
+      onMouseOut={() => targetOffer?.(null)}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -40,19 +40,11 @@ function OfferCard({ offer, cardType, targetOffer }: TOfferCardProps): JSX.Eleme
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${
-            isFavoriteOffer ? 'place-card__bookmark-button--active' : ''
-          } button`} type="button" onClick={handleFavoriteOfferClick}
-          >
-            <svg className="place-card__bookmark-icon" width={18} height={19}>
-              <use xlinkHref="#icon-bookmark"/>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoriteButton id={id} isActive={isFavorite} pageType={FavoriteButtonPageType.Default}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(rating * 100) / 5}%`}}/>
+            <span style={{width: calculateRatingInWidthPercent(rating)}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

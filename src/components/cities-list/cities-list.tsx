@@ -1,12 +1,12 @@
-import {TCity} from '../../types/offer';
-import {useAppDispatch} from '../hooks';
-import classNames from 'classnames';
 import {Link} from 'react-router-dom';
-import {setActiveCity} from '../../store/action';
+import {useAppDispatch} from '../hooks';
+import {setActiveCity} from '../../store/app-data/app-data.slice';
+import {TCity} from '../../types/offer';
 import {CityNames} from '../../constants';
+import classNames from 'classnames';
 
 type TCitiesProps = {
-  selectedCity: TCity;
+  selectedCity: TCity['name'];
 }
 
 function CitiesList({ selectedCity }: TCitiesProps): JSX.Element {
@@ -23,8 +23,8 @@ function CitiesList({ selectedCity }: TCitiesProps): JSX.Element {
               'tabs__item': true,
               'tabs__item--active': selectedCity === city
             })}
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={(evt) => {
+              evt.preventDefault();
               dispatch(setActiveCity(city));
             }}
             to="/"

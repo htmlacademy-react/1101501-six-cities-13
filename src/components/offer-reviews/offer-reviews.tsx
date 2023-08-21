@@ -5,6 +5,7 @@ import {useEffect} from 'react';
 import {fetchReviews} from '../../store/api-actions';
 import {TOfferFull} from '../../types/offerFull';
 import Spinner from '../loading/spinner';
+import {getReviews, getReviewsFetchingStatus} from '../../store/reviews-data/reviews-data.selectors';
 
 type TOfferReviewsProps = {
   offerId: TOfferFull['id'];
@@ -12,8 +13,8 @@ type TOfferReviewsProps = {
 
 function OfferReviews({ offerId }: TOfferReviewsProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const reviews = useAppSelector((state) => state.reviews);
-  const reviewsFetchingStatus = useAppSelector((state) => state.fetchReviewsStatus);
+  const reviews = useAppSelector(getReviews);
+  const reviewsFetchingStatus = useAppSelector(getReviewsFetchingStatus);
   const sortedReviews = [...reviews].sort((a, b) => new Date(b.date) - new Date(a.date));
   const reviewsToRender = sortedReviews.slice(0, MAX_REVIEWS_COUNT);
 

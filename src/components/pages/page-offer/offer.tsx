@@ -10,19 +10,22 @@ import {
   RequestStatus
 } from '../../../constants';
 import Spinner from '../../loading/spinner';
-import Map from '../../map/Map';
+import Map from '../../map/map';
 import {TOffer} from '../../../types/offer';
-import OfferCard from '../../offer-card/OfferCard';
-import PageNotFound from '../page-not-found/PageNotFound';
+import OfferCard from '../../offer-card/offer-card';
+import PageNotFound from '../page-not-found/page-not-found';
+import {getOffer, getOfferFetchingStatus} from '../../../store/offer-data/offer-data.selectors';
+import {getNearPlaces, getNearPlacesFetchingStatus} from '../../../store/near-places-data/near-places-data.selectors';
+import {getAuthorizationStatus} from '../../../store/user-data/user-data.selectors';
 
 function Offer(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id: offerId} = useParams();
-  const offer = useAppSelector((state) => state.offer);
-  const nearPlaces = useAppSelector((state) => state.nearPlaces);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const offerFetchingStatus = useAppSelector((state) => state.fetchOfferStatus);
-  const nearPlacesFetchingStatus = useAppSelector((state) => state.fetchNearPlacesStatus);
+  const offer = useAppSelector(getOffer);
+  const nearPlaces = useAppSelector(getNearPlaces);
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const offerFetchingStatus = useAppSelector(getOfferFetchingStatus);
+  const nearPlacesFetchingStatus = useAppSelector(getNearPlacesFetchingStatus);
 
   const limitedNearPlaces = (offers: TOffer[]): TOffer[] => {
     const limitedOffers = [];
@@ -46,23 +49,13 @@ function Offer(): JSX.Element {
     }
   }, [offerId, dispatch]);
 
-  if (
-    offerFetchingStatus === RequestStatus.Pending
-    || nearPlacesFetchingStatus === RequestStatus.Pending
-  ) {
-    return (
-      <Spinner />
-    );
+  if (offerFetchingStatus === RequestStatus.Pending
+    || nearPlacesFetchingStatus === RequestStatus.Pending) {
+    return <Spinner />;
   }
 
-  if (offerFetchingStatus === RequestStatus.Rejected) {
-    return (
-      <PageNotFound />
-    );
-  }
-
-  {if ((offerFetchingStatus === RequestStatus.Success) && offer) {
-    return (
+  return (offerFetchingStatus === RequestStatus.Success) && offer ?
+    (
       <main className="page__main page__main--offer">
         <section className="offer">
           <OfferDetails offer={offer} authStatus={authStatus}/>
@@ -88,8 +81,9 @@ function Offer(): JSX.Element {
           )}
         </div>
       </main>
+    ) : (
+      <PageNotFound />
     );
-  }}
 }
 
 export default Offer;

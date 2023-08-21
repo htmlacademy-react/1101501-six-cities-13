@@ -1,8 +1,11 @@
-import {Link, Outlet} from 'react-router-dom';
+import {Link, Outlet, useLocation} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../hooks';
-import {logOut} from '../../store/api-actions';
-import {MouseEvent} from 'react';
+import {fetchFavorites, logOut} from '../../store/api-actions';
+import {MouseEvent, useEffect} from 'react';
+import classNames from 'classnames';
+import {getFavorites} from '../../store/favorites-data/favorites-data.selectors';
+import {getUser} from '../../store/user-data/user-data.selectors';
 
 type TLayoutProps = {
   authStatus: AuthorizationStatus;
@@ -10,19 +13,39 @@ type TLayoutProps = {
 
 function Layout({ authStatus }: TLayoutProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector(getUser);
+  const favoriteOffers = useAppSelector(getFavorites);
+  const {pathname} = useLocation();
+
   const handleLogOutClick = (evt: MouseEvent<HTMLAnchorElement>): void => {
     evt.preventDefault();
     dispatch(logOut());
   };
 
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchFavorites());
+    }
+  }, [dispatch, user]);
+
   return (
-    <div className="page page--gray page--main">
+    <div className={classNames({
+      'page': true,
+      'page--gray': pathname.includes(AppRoute.Login) || pathname === AppRoute.Root,
+      'page--login': pathname.includes(AppRoute.Login),
+      'page--main': pathname === AppRoute.Root,
+      'page--favorites-empty': pathname.includes(AppRoute.Favorites) && Boolean(favoriteOffers.length === 0)
+    })}
+    >
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link to="/" className="header__logo-link header__logo-link--active">
+              <Link to={AppRoute.Root} className={classNames({
+                'header__logo-link--active': pathname === AppRoute.Root,
+                'header__logo-link': true
+              })}
+              >
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -44,7 +67,7 @@ function Layout({ authStatus }: TLayoutProps): JSX.Element {
                       <span className="header__user-name user__name">
                         {user?.email ?? ''}
                       </span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favoriteOffers.length}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">
@@ -54,6 +77,8 @@ function Layout({ authStatus }: TLayoutProps): JSX.Element {
                   </li>
                 </ul>
               ) : (
+                !pathname.includes(AppRoute.Login)
+                &&
                 <ul className="header__nav-list">
                   <li className="header__nav-item">
                     <Link className="header__nav-link" to={AppRoute.Login}>
