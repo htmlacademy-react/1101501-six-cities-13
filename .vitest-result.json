@@ -1,0 +1,90 @@
+{
+  "numTotalTestSuites": 2,
+  "numPassedTestSuites": 2,
+  "numFailedTestSuites": 0,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 6,
+  "numPassedTests": 6,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "startTime": 1693061725471,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "",
+            "FavoritesData slice"
+          ],
+          "fullName": " FavoritesData slice should return initial state with empty action",
+          "status": "passed",
+          "title": "should return initial state with empty action",
+          "duration": 2,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "FavoritesData slice"
+          ],
+          "fullName": " FavoritesData slice should return default initial state with empty action and undefined state",
+          "status": "passed",
+          "title": "should return default initial state with empty action and undefined state",
+          "duration": 1,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "FavoritesData slice"
+          ],
+          "fullName": " FavoritesData slice should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Pending\" with \"fetchFavorites.pending\"",
+          "status": "passed",
+          "title": "should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Pending\" with \"fetchFavorites.pending\"",
+          "duration": 0,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "FavoritesData slice"
+          ],
+          "fullName": " FavoritesData slice should set \"favoriteOffers\" to array with favorite offer, \"RequestStatus.Success\" with \"fetchFavorites.fulfilled\"",
+          "status": "passed",
+          "title": "should set \"favoriteOffers\" to array with favorite offer, \"RequestStatus.Success\" with \"fetchFavorites.fulfilled\"",
+          "duration": 1,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "FavoritesData slice"
+          ],
+          "fullName": " FavoritesData slice should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Rejected\" with \"fetchFavorites.rejected\"",
+          "status": "passed",
+          "title": "should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Rejected\" with \"fetchFavorites.rejected\"",
+          "duration": 1,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "FavoritesData slice"
+          ],
+          "fullName": " FavoritesData slice should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Rejected\" with \"fetchFavorites.rejected\"",
+          "status": "passed",
+          "title": "should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Rejected\" with \"fetchFavorites.rejected\"",
+          "duration": 0,
+          "failureMessages": []
+        }
+      ],
+      "startTime": 1693062119800,
+      "endTime": 1693062119805,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/Flocktory/Desktop/Projects/1101501-six-cities-13/src/store/favorites-data/favorites-data.slice.test.ts"
+    }
+  ]
+}

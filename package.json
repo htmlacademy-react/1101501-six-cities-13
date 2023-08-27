@@ -7,7 +7,8 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx",
     "preview": "vite preview",
-    "test": "vitest --passWithNoTests"
+    "test": "vitest --passWithNoTests",
+    "webstorm-integration": "vitest --watch --reporter=dot --reporter=json --outputFile=.vitest-result.json"
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.5",

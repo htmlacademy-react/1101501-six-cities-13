@@ -2,7 +2,7 @@ import {TOfferFull} from '../../types/offerFull';
 import OfferReviewForm from '../offer-review-form/offer-review-form';
 import {JSX} from 'react';
 import classNames from 'classnames';
-import {calculateRatingInWidthPercent} from '../../utils/utils';
+import {calculateRatingInWidthPercent, capitalizedFirstLetterInWord} from '../../utils/utils';
 import OfferReviews from '../offer-reviews/offer-reviews';
 import {AuthorizationStatus, FavoriteButtonPageType} from '../../constants';
 import {Helmet} from 'react-helmet-async';
@@ -60,13 +60,13 @@ function OfferDetails({ offer, authStatus }: TOfferDetailsProps): JSX.Element {
           </div>
           <ul className="offer__features">
             <li className="offer__feature offer__feature--entire">
-              {type}
+              {capitalizedFirstLetterInWord(type)}
             </li>
             <li className="offer__feature offer__feature--bedrooms">
-              {bedrooms} Bedrooms
+              {bedrooms} {bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}
             </li>
             <li className="offer__feature offer__feature--adults">
-              Max {maxAdults} adults
+              Max {maxAdults} {maxAdults > 1 ? 'adults' : 'adult'}
             </li>
           </ul>
           <div className="offer__price">

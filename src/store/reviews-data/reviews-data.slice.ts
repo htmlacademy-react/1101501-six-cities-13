@@ -14,7 +14,11 @@ const initialState: TReviewsDataState = {
 export const reviewsDataSlice = createSlice({
   name: NameSpace.Reviews,
   initialState,
-  reducers: {},
+  reducers: {
+    resetPostStatus(state) {
+      state.postReviewStatus = RequestStatus.Idle;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchReviews.pending, (state) => {
@@ -39,3 +43,5 @@ export const reviewsDataSlice = createSlice({
       });
   },
 });
+
+export const { resetPostStatus } = reviewsDataSlice.actions;

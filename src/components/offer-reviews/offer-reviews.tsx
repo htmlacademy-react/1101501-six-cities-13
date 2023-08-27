@@ -35,7 +35,7 @@ function OfferReviews({ offerId }: TOfferReviewsProps): JSX.Element {
   return (
     <>
       <h2 className="reviews__title">
-        Reviews · <span className="reviews__amount">{reviewsToRender.length}</span>
+        Reviews · <span className="reviews__amount">{sortedReviews.length}</span>
       </h2>
       <ul className="reviews__list">
         {reviewsToRender.map((review) => (

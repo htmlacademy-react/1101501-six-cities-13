@@ -2,11 +2,11 @@ import {DEFAULT_LOCATION, NameSpace} from '../../constants';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {TInitialState} from '../../types/state';
 
-type TAppDataState = Pick<TInitialState, 'city' | 'error'>;
+type TAppDataState = Pick<TInitialState, 'city' | 'errorMessage'>;
 
 const initialState: TAppDataState = {
   city: DEFAULT_LOCATION,
-  error: '',
+  errorMessage: null,
 };
 
 export const appDataSlice = createSlice({
@@ -16,8 +16,8 @@ export const appDataSlice = createSlice({
     setActiveCity(state, action: PayloadAction<TAppDataState['city']>) {
       state.city = action.payload;
     },
-    fetchError(state, action: PayloadAction<TAppDataState['error']>) {
-      state.error = action.payload;
+    fetchError(state, action: PayloadAction<TAppDataState['errorMessage']>) {
+      state.errorMessage = action.payload;
     },
   },
 });

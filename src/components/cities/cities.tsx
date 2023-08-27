@@ -29,7 +29,7 @@ function Cities({ city, offers, isHasOffers }: TCities): JSX.Element {
           </div>
         </div>
       ) : (
-        <MainEmpty />
+        <MainEmpty city={city} />
       )
   );
 }

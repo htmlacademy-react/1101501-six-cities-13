@@ -6,9 +6,10 @@ type TChangeEvent = ChangeEvent<HTMLInputElement>
 type TOfferRatingProps = {
   onRatingChange: (ratingValue: number) => void;
   initialValue: number;
+  isAwaitingSentReview: boolean;
 }
 
-function OfferRating({ initialValue, onRatingChange }: TOfferRatingProps): JSX.Element {
+function OfferRating({ initialValue, onRatingChange, isAwaitingSentReview }: TOfferRatingProps): JSX.Element {
   const ratings = [...OFFER_REVIEW_RATINGS].sort((a, b) => b.ratingValue - a.ratingValue);
 
   const handleRatingChange = (evt: TChangeEvent) => {
@@ -20,7 +21,7 @@ function OfferRating({ initialValue, onRatingChange }: TOfferRatingProps): JSX.E
     <div className="reviews__rating-form form__rating">
       {ratings.map((rating) => {
         const {ratingValue, ratingText} = rating;
-        const generateIdValue = `${ratingValue}-${ratingValue > 1 ? 'stars' : 'star'}`;
+        const generateIdValue = `${ratingValue}-stars`;
 
         return (
           <React.Fragment key={ratingValue}>
@@ -32,6 +33,7 @@ function OfferRating({ initialValue, onRatingChange }: TOfferRatingProps): JSX.E
               type="radio"
               onChange={handleRatingChange}
               checked={initialValue === ratingValue}
+              disabled={isAwaitingSentReview}
             />
             <label
               htmlFor={generateIdValue}
