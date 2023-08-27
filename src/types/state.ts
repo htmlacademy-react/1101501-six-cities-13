@@ -21,7 +21,7 @@ export type TInitialState = {
   fetchFavoriteOffersStatus: RequestStatus;
   nearPlaces: TOffer[];
   fetchNearPlacesStatus: RequestStatus;
-  error: string | null;
+  errorMessage: string | null;
   user: TAuthUserData | null;
   loginStatus: RequestStatus;
   authorizationStatus: AuthorizationStatus;

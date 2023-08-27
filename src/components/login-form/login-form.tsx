@@ -8,8 +8,8 @@ import {getLoginStatus} from '../../store/user-data/user-data.selectors';
 type TChangeEvent = ChangeEvent<HTMLInputElement>
 type TSubmitEvent = FormEvent
 
-const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-const PASSWORD_INVALID_MESSAGE = 'Password must contain more than 8 chars and at least one letter and one digit';
+const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z-A-Z]).{2,}$/;
+const PASSWORD_INVALID_MESSAGE = 'Password must contain 2 chars or more than and at least one letter and one digit';
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const EMAIL_INVALID_MESSAGE = 'Please, enter correct email address';
 const FAILED_SUBMIT_FORM = 'Failed submit form. Please, try again!';

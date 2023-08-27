@@ -1,7 +1,7 @@
 import {TOffer} from '../../types/offer';
 import {Link} from 'react-router-dom';
 import {AppRoute, FavoriteButtonPageType} from '../../constants';
-import {calculateRatingInWidthPercent} from '../../utils/utils';
+import {calculateRatingInWidthPercent, capitalizedFirstLetterInWord} from '../../utils/utils';
 import FavoriteButton from '../favorite-button/favorite-button';
 
 type TOfferCardProps = {
@@ -51,7 +51,7 @@ function OfferCard({ offer, cardType, targetOffer }: TOfferCardProps): JSX.Eleme
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}/${offer.id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalizedFirstLetterInWord(type)}</p>
       </div>
     </article>
   );

@@ -39,11 +39,11 @@ function Main(): JSX.Element {
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          {offersFromCity.length && <CitiesList selectedCity={activeCity}/>}
+          <CitiesList selectedCity={activeCity}/>
         </section>
       </div>
       <div className="cities">
-        {Boolean(offersFromCity.length) && <Cities city={activeCity} isHasOffers={isHasOffers} offers={offersFromCity} />}
+        <Cities city={activeCity} isHasOffers={isHasOffers} offers={offersFromCity} />
       </div>
     </main>
   );
