@@ -3,14 +3,18 @@ import {useEffect} from 'react';
 import {fetchOffers} from '../../../store/api-actions';
 import CitiesList from '../../cities-list/cities-list';
 import Cities from '../../cities/cities';
-import {RequestStatus} from '../../../constants';
+import {AuthorizationStatus, RequestStatus} from '../../../constants';
 import Spinner from '../../loading/spinner';
 import {Helmet} from 'react-helmet-async';
 import classNames from 'classnames';
 import {getSelectedCity} from '../../../store/app-data/app-data.selectors';
 import {getOffers, getOffersFetchingStatus} from '../../../store/offers-data/offers-data.selectors';
 
-function Main(): JSX.Element {
+type TMainProps = {
+  authStatus: AuthorizationStatus;
+}
+
+function Main({ authStatus }:TMainProps): JSX.Element {
   const dispatch = useAppDispatch();
   const activeCity = useAppSelector(getSelectedCity);
   const offers = useAppSelector(getOffers);
@@ -20,7 +24,7 @@ function Main(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOffers());
-  }, [dispatch]);
+  }, [dispatch, authStatus]);
 
   if (offersFetchingStatus === RequestStatus.Pending) {
     return <Spinner />;

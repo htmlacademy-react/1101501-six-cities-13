@@ -5,7 +5,7 @@ import {TCity} from '../../types/offer';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  city: TCity
+  city: TCity,
 ):Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);

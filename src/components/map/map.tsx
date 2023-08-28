@@ -4,6 +4,7 @@ import {TCity, TOffer} from '../../types/offer';
 import useMap from '../hooks/use-map';
 import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../constants';
 import 'leaflet/dist/leaflet.css';
+import { TOfferFull } from '../../types/offerFull';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT
@@ -14,7 +15,7 @@ const currentCustomIcon = new Icon({
 });
 
 type TMapProps = {
-  targetOffer: TOffer | null;
+  targetOffer: TOfferFull | TOffer | null ;
   city: TCity;
   offers: TOffer[];
   pageType: string;

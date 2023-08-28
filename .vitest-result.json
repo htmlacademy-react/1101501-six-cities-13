@@ -3,12 +3,12 @@
   "numPassedTestSuites": 2,
   "numFailedTestSuites": 0,
   "numPendingTestSuites": 0,
-  "numTotalTests": 6,
-  "numPassedTests": 6,
+  "numTotalTests": 5,
+  "numPassedTests": 5,
   "numFailedTests": 0,
   "numPendingTests": 0,
   "numTodoTests": 0,
-  "startTime": 1693061725471,
+  "startTime": 1693145109964,
   "success": true,
   "testResults": [
     {
@@ -16,9 +16,9 @@
         {
           "ancestorTitles": [
             "",
-            "FavoritesData slice"
+            "OfferData slice"
           ],
-          "fullName": " FavoritesData slice should return initial state with empty action",
+          "fullName": " OfferData slice should return initial state with empty action",
           "status": "passed",
           "title": "should return initial state with empty action",
           "duration": 2,
@@ -27,9 +27,9 @@
         {
           "ancestorTitles": [
             "",
-            "FavoritesData slice"
+            "OfferData slice"
           ],
-          "fullName": " FavoritesData slice should return default initial state with empty action and undefined state",
+          "fullName": " OfferData slice should return default initial state with empty action and undefined state",
           "status": "passed",
           "title": "should return default initial state with empty action and undefined state",
           "duration": 1,
@@ -38,53 +38,42 @@
         {
           "ancestorTitles": [
             "",
-            "FavoritesData slice"
+            "OfferData slice"
           ],
-          "fullName": " FavoritesData slice should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Pending\" with \"fetchFavorites.pending\"",
+          "fullName": " OfferData slice should set \"fetchOfferStatus\" to \"RequestStatus.Pending\" with \"fetchOffer.pending\"",
           "status": "passed",
-          "title": "should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Pending\" with \"fetchFavorites.pending\"",
-          "duration": 0,
-          "failureMessages": []
-        },
-        {
-          "ancestorTitles": [
-            "",
-            "FavoritesData slice"
-          ],
-          "fullName": " FavoritesData slice should set \"favoriteOffers\" to array with favorite offer, \"RequestStatus.Success\" with \"fetchFavorites.fulfilled\"",
-          "status": "passed",
-          "title": "should set \"favoriteOffers\" to array with favorite offer, \"RequestStatus.Success\" with \"fetchFavorites.fulfilled\"",
+          "title": "should set \"fetchOfferStatus\" to \"RequestStatus.Pending\" with \"fetchOffer.pending\"",
           "duration": 1,
           "failureMessages": []
         },
         {
           "ancestorTitles": [
             "",
-            "FavoritesData slice"
+            "OfferData slice"
           ],
-          "fullName": " FavoritesData slice should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Rejected\" with \"fetchFavorites.rejected\"",
+          "fullName": " OfferData slice should set \"offer\" to offer info, \"RequestStatus.Success\" with \"fetchOffer.fulfilled\"",
           "status": "passed",
-          "title": "should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Rejected\" with \"fetchFavorites.rejected\"",
-          "duration": 1,
+          "title": "should set \"offer\" to offer info, \"RequestStatus.Success\" with \"fetchOffer.fulfilled\"",
+          "duration": 0,
           "failureMessages": []
         },
         {
           "ancestorTitles": [
             "",
-            "FavoritesData slice"
+            "OfferData slice"
           ],
-          "fullName": " FavoritesData slice should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Rejected\" with \"fetchFavorites.rejected\"",
+          "fullName": " OfferData slice should set \"fetchOfferStatus\" to \"RequestStatus.Rejected\" with \"fetchOffer.rejected\"",
           "status": "passed",
-          "title": "should set \"fetchFavoriteOffersStatus\" to \"RequestStatus.Rejected\" with \"fetchFavorites.rejected\"",
-          "duration": 0,
+          "title": "should set \"fetchOfferStatus\" to \"RequestStatus.Rejected\" with \"fetchOffer.rejected\"",
+          "duration": 1,
           "failureMessages": []
         }
       ],
-      "startTime": 1693062119800,
-      "endTime": 1693062119805,
+      "startTime": 1693229050410,
+      "endTime": 1693229050415,
       "status": "passed",
       "message": "",
-      "name": "C:/Users/Flocktory/Desktop/Projects/1101501-six-cities-13/src/store/favorites-data/favorites-data.slice.test.ts"
+      "name": "C:/Users/Flocktory/Desktop/Projects/1101501-six-cities-13/src/store/offer-data/offer-data.slice.test.ts"
     }
   ]
 }

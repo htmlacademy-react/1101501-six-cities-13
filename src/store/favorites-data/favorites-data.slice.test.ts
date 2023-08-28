@@ -2,7 +2,7 @@ import {describe, expect, it} from 'vitest';
 import {RequestStatus} from '../../constants';
 import {mockOffer} from '../../utils/mocks';
 import {favoritesDataSlice} from './favorites-data.slice';
-import {fetchFavorites} from '../api-actions';
+import {changeFavorite, fetchFavorites} from '../api-actions';
 
 describe('FavoritesData slice', () => {
   const action = {type: ''};
@@ -44,9 +44,22 @@ describe('FavoritesData slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "fetchFavoriteOffersStatus" to "RequestStatus.Rejected" with "fetchFavorites.rejected"', () => {
-    const expectedState = {favoriteOffers: [], fetchFavoriteOffersStatus: RequestStatus.Rejected};
-    const result = favoritesDataSlice.reducer(undefined, fetchFavorites.rejected);
+  it('should add offer to array "favoriteOffers" with "changeFavorite.fulfilled"', () => {
+    const state = {favoriteOffers: []};
+    const expectedState = {favoriteOffers: [mockOffer]};
+    const result = favoritesDataSlice.reducer(state, changeFavorite.fulfilled(
+      mockOffer, '', undefined
+    ));
+
+    expect(result).toEqual(expectedState);
+  });
+
+  it('should remove offer to array "favoriteOffers" with "changeFavorite.fulfilled"', () => {
+    const state = {favoriteOffers: [mockOffer]};
+    const expectedState = {favoriteOffers: []};
+    const result = favoritesDataSlice.reducer(state, changeFavorite.fulfilled(
+      mockOffer, '', undefined
+    ));
 
     expect(result).toEqual(expectedState);
   });

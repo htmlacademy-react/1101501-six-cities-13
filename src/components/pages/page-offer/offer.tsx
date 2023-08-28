@@ -13,21 +13,24 @@ import Spinner from '../../loading/spinner';
 import Map from '../../map/map';
 import {TOffer} from '../../../types/offer';
 import OfferCard from '../../offer-card/offer-card';
+import {AuthorizationStatus} from '../../../constants';
 import PageNotFound from '../page-not-found/page-not-found';
 import {getOffer, getOfferFetchingStatus} from '../../../store/offer-data/offer-data.selectors';
 import {getNearPlaces, getNearPlacesFetchingStatus} from '../../../store/near-places-data/near-places-data.selectors';
-import {getAuthorizationStatus} from '../../../store/user-data/user-data.selectors';
 
-function Offer(): JSX.Element {
+type TOfferProps = {
+  authStatus: AuthorizationStatus;
+}
+
+function Offer({ authStatus }: TOfferProps): JSX.Element {
   const dispatch = useAppDispatch();
   const {id: offerId} = useParams();
   const offer = useAppSelector(getOffer);
   const nearPlaces = useAppSelector(getNearPlaces);
-  const authStatus = useAppSelector(getAuthorizationStatus);
   const offerFetchingStatus = useAppSelector(getOfferFetchingStatus);
   const nearPlacesFetchingStatus = useAppSelector(getNearPlacesFetchingStatus);
 
-  const limitedNearPlaces = (offers: TOffer[]): TOffer[] => {
+  const getLimitedNearPlaces = (offers: TOffer[]): TOffer[] => {
     const limitedOffers = [];
     for (let i = 0; limitedOffers.length < MAX_NEAR_PLACES_COUNT; i++) {
       limitedOffers.push(offers[i]);
@@ -35,10 +38,10 @@ function Offer(): JSX.Element {
     return limitedOffers;
   };
 
-  const nearPlacesToRender = (places: TOffer[], activeOffer?: TOffer | null): TOffer[] => {
+  const getNearPlacesToRender = (places: TOffer[], activeOffer?: TOffer | null): TOffer[] => {
     const result = places.length <= MAX_NEAR_PLACES_COUNT
       ? nearPlaces
-      : limitedNearPlaces(places);
+      : getLimitedNearPlaces(places);
     return activeOffer ? [...result, activeOffer] : result;
   };
 
@@ -47,7 +50,7 @@ function Offer(): JSX.Element {
       dispatch(fetchOffer(offerId));
       dispatch(fetchNearPlaces(offerId));
     }
-  }, [offerId, dispatch]);
+  }, [offerId, dispatch, authStatus]);
 
   if (offerFetchingStatus === RequestStatus.Pending
     || nearPlacesFetchingStatus === RequestStatus.Pending) {
@@ -62,18 +65,18 @@ function Offer(): JSX.Element {
           <Map
             city={offer.city}
             targetOffer={offer}
-            offers={nearPlacesToRender(nearPlaces, offer)}
+            offers={getNearPlacesToRender(nearPlaces, offer)}
             pageType={MapPageType.Offer}
           />
         </section>
         <div className="container">
-          {nearPlacesToRender(nearPlaces).length && (
+          {getNearPlacesToRender(nearPlaces).length && (
             <section className="near-places places">
               <h2 className="near-places__title">
                 Other places in the neighbourhood
               </h2>
               <div className="near-places__list places__list">
-                {nearPlacesToRender(nearPlaces).map((placeOffer) => (
+                {getNearPlacesToRender(nearPlaces).map((placeOffer) => (
                   <OfferCard key={placeOffer.id} offer={placeOffer} cardType={OfferCardPageType.NearPlaces} />
                 ))}
               </div>

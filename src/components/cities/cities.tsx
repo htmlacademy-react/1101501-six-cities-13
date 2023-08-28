@@ -12,7 +12,7 @@ type TCities = {
 }
 
 function Cities({ city, offers, isHasOffers }: TCities): JSX.Element {
-  const cityInfo = offers.find((cityData) => cityData?.city.name === city)?.city;
+  const cityInfo = offers[offers.findIndex((cityData) => cityData?.city.name === city)]?.city;
   const [activeOffer, setActiveOffer] = useState<TOffer | null>(null);
 
   const handleCardHover = useCallback((offer: TOffer) => {
