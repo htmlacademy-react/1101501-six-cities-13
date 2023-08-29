@@ -53,10 +53,10 @@ export enum FavoriteButtonPageType {
   Offer = 'offer',
 }
 
-export enum FavoriteIconSize {
-  Small = {width: 18, height: 19},
-  Large = {width: 31, height: 33}
-}
+export const FavoriteIconSize = {
+  Small: {width: 18, height: 19},
+  Large: {width: 31, height: 33}
+} as const;
 
 export enum OfferReviewLimit {
   ReviewMinLength = 50,
@@ -105,3 +105,5 @@ export const DEFAULT_LOCATION = 'Paris';
 
 export const MAX_NEAR_PLACES_COUNT = 3;
 export const MAX_REVIEWS_COUNT = 10;
+
+export const MAX_RATING_VALUE = 5;

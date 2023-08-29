@@ -7,7 +7,7 @@ import FavoriteButton from '../favorite-button/favorite-button';
 type TOfferCardProps = {
   offer: TOffer;
   cardType: string;
-  targetOffer?: (TOffer) => void;
+  targetOffer?: (offer: TOffer | null) => void;
 }
 
 function OfferCard({ offer, cardType, targetOffer }: TOfferCardProps): JSX.Element {

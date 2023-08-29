@@ -28,10 +28,10 @@ function App(): JSX.Element {
       <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path={AppRoute.Root} element={<Layout authStatus={authStatus} />}>
-            <Route index element={<Main />} />
+            <Route index element={<Main authStatus={authStatus} />} />
             <Route path={AppRoute.Login} element={<Login authStatus={authStatus} />} />
             <Route path={AppRoute.Offer}>
-              <Route path=':id' element={<Offer />} />
+              <Route path=':id' element={<Offer authStatus={authStatus} />} />
             </Route>
             <Route
               path={AppRoute.Favorites}
